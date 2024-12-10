@@ -28,6 +28,7 @@ typedef struct seriesData
   double rating;
   char actor[ACTORSMAXLENGTH];
   int score; 
+  int episodes;
 } seriesData;
 
 
@@ -74,13 +75,25 @@ int main(void)
           {"scary movie", "18", 5400, "Horror", 8.7, "Anna Faris", 0}};
   seriesData seriesArray[3] = 
       {
-       {"stranger things", "16", 2400, "horror", 8.2, "Elleven", 0},
-       {"Arcane", "13", 2000, "Animation", 10, "Ella", 0},
-       {"Invincible", "18", 1600, "Action", 8.3, "Big Guy", 0}};
+       {"stranger things", "16", 2400, "horror", 8.2, "Elleven", 0, 0},
+       {"Arcane", "13", 2000, "Animation", 10, "Ella", 0, 0},
+       {"Invincible", "18", 1600, "Action", 8.3, "Big Guy", 0, 0}};
 
 
 int size_movie = sizeof(movieArray) / sizeof(movieArray[0]);
 int size_series = sizeof(seriesArray) / sizeof(seriesArray[0]);
+
+for (int i = 0; i < size_series; i++) 
+{
+    if (seriesArray[i].duration > 0)  // Ensure division is valid
+    {
+        seriesArray[i].episodes = userpref.timetowatch / seriesArray[i].duration;
+    }
+    else 
+    {
+        seriesArray[i].episodes + 0;  // Handle cases where the series has no episodes
+    }
+}
 
 // give points to movies and series
 give_points(movieArray, userpref, size_movie);
@@ -91,21 +104,26 @@ qsort(movieArray, size_movie, sizeof(movieData), sort_movie);
 qsort(seriesArray, size_series, sizeof(seriesData), sort_series);
 
 //display movie
-printf("These are the movie recommendations: \n");
-printf("%-16s%-16s%-16s%-16s%-16s%-16s\n", "Title:", "Genre:", "Actor:", "Duration:", "IMDB:", "TEST-SCORE");
-printf("-------------------------------------------------------------------------------------------\n");
+printf("These are the movie recommendations: \n\n");
+printf("%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:"); //Skal lige fixe "min" i duration
+printf("--------------------------------------------------------");
 for (int i = 0; i < size_movie; i++)
 {
-  printf("%-16s%-16s%-16s%-16d%-16.1lf%-16d\n", movieArray[i].title, movieArray[i].genre, movieArray[i].actor, movieArray[i].duration / 60, movieArray[i].rating, movieArray[i].score);
+  printf("\n%-16s%-16d%-16lf", movieArray[i].title, movieArray[i].duration / 60, movieArray[i].rating);
 }
+
+
+
 // display serie
-printf("\nThese are the serie recommendations: \n");
-printf("%-16s%-16s%-16s%-16s%-16s%-16s\n", "Title:", "Genre:", "Actor:", "Duration:", "IMDB:", "TEST-SCORE");
-printf("-------------------------------------------------------------------------------------------\n");
+printf("\n\nThese are the series recommendations: \n\n");
+printf("%-16s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:"); //Skal lige fixe "min" i duration
+printf("-----------------------------------------------------------\n");
 
 for (int i = 0; i < size_series; i++)
 {
-  printf("%-16s%-16s%-16s%-16d%-16.1lf%-16d\n", seriesArray[i].title, seriesArray[i].genre, seriesArray[i].actor, seriesArray[i].duration / 60, seriesArray[i].rating, seriesArray[i].score);  
+  printf("%-16s%-16d%-16.1lf%-16d\n", 
+        seriesArray[i].title, seriesArray[i].duration / 60, 
+        seriesArray[i].rating, seriesArray[i].episodes);  
 }
 return 0;
 }
