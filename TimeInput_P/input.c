@@ -14,6 +14,9 @@ typedef struct pref
     int genrepref2;
     char genre3[10];
     int genrepref3;
+    char actor1[50];
+    char actor2[50];
+    char actor3[50];
     int min;
     int max;
     int timetowatch;
@@ -64,6 +67,7 @@ pref new_rec(void)
 
     int g1 = -1, g2 = -1, g3 = -1;                    // g1-2-3 default index -1
     char gp1[10] = "?", gp2[10] = "?", gp3[10] = "?"; // 3 genre preferences
+    char actor1[50] = "?", actor2[50] = "?", actor3[50] = "?";
     char genre[AMOUNTOFGENRES][12] = {"Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family",
                           "Fantasy", "History", "Horror", "Musical", "Mystery", "Reality-TV", "Romance", "Sci-Fi", "Short", "Sport", "Thriller", "War"};
 
@@ -101,6 +105,10 @@ pref new_rec(void)
 
     } while (g1 == -1); // repeat if no valid genre 1
 
+
+    printf("\nWrite 1 to 3 actors you want to see, separated by a comma (,): \n");
+    scanf(" %49s, %49s, %49s", &actor1, &actor2, &actor3);
+
     do
     {
         printf("\nDo you want to be recommended 18+ films? (y/n): \n");
@@ -129,9 +137,16 @@ pref new_rec(void)
     preference.genrepref2 = g2;
     strcpy(preference.genre3, genre[g3]);
     preference.genrepref3 = g3;
+
+    strcpy(preference.actor1, actor1);
+    strcpy(preference.actor2, actor2);
+    strcpy(preference.actor3, actor3);
+
     preference.min = min_rating;
     preference.max = max_rating;
+
     preference.timetowatch = diff;
+
     preference.ageRating = ar;
 
     return preference;
