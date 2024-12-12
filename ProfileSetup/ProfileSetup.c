@@ -1,3 +1,4 @@
+#include "ProfileSetup.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,7 +12,7 @@ void listProfiles();
 int profileExists(const char* profileName);
 void addProfileToFile(const char* profileName);
 
-int main() {
+int almostmain() {
     int choice;
 
     do {

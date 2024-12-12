@@ -1,3 +1,4 @@
+#include "CoolName.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,7 +19,7 @@ typedef struct movieData
     char actors[ACTORSMAXLENGTH];
 } movieData;
 
-int main(void)
+int almostmain(void)
 {
     movieData m1 = {"star wars", 16, 140 * 60, "Adventure", 9.9, "Ewan McGregor"};
     movieData m2 = {"wall-e", 6, 85 * 60, "Adventure", 9.2, "Elissa Knight"};

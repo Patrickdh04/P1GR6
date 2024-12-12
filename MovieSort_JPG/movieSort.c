@@ -1,3 +1,4 @@
+#include "movieSort.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,7 +55,7 @@ void sortMovies(movieData *moviesPreSort, movieData *movies, movieData *series, 
                 char *conWatch, movieData *conWatchData);
 void copyData(movieData *movieArray, int index, movieData *moviesPreSort, int indexPreSort);
 
-int main(void)
+int almostmain(void)
 {
     // temp input
     char nc = 'c';

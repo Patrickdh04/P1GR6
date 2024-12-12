@@ -1,3 +1,4 @@
+#include "input.h"
 #include <stdio.h> // Engelsk eller Dansk?
 #include <stdlib.h>
 #include <time.h>
@@ -30,7 +31,7 @@ pref new_rec(void);
 conpref con_rec(void);
 int getdiff(void);
 
-int main(void)
+int almostmain(void)
 {
 
     char nc = '?';
