@@ -35,6 +35,9 @@ typedef struct pref
     int genrepref2;
     char genre3[GENREMAXLENGTH];
     int genrepref3;
+    char actor1[50];
+    char actor2[50];
+    char actor3[50];
     int min;
     int max;
     int timetowatch;
