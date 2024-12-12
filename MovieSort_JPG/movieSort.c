@@ -1,3 +1,4 @@
+#include "movieSort.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,6 +36,9 @@ typedef struct pref
     int genrepref2;
     char genre3[GENREMAXLENGTH];
     int genrepref3;
+    char actor1[50];
+    char actor2[50];
+    char actor3[50];
     int min;
     int max;
     int timetowatch;
@@ -54,7 +58,7 @@ void sortMovies(movieData *moviesPreSort, movieData *movies, movieData *series, 
                 char *conWatch, movieData *conWatchData);
 void copyData(movieData *movieArray, int index, movieData *moviesPreSort, int indexPreSort);
 
-int main(void)
+int almostmain(void)
 {
     // temp input
     char nc = 'c';

@@ -1,3 +1,4 @@
+#include "CoolName.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,7 +55,7 @@ int sort_movie(const void *a, const void *b);
 int sort_series(const void *a, const void *b);
 void display(movieData movieArray[], int size_movie, seriesData seriesArray[], int size_series);
 
-int main(void)
+int almostmain(void)
 {
   pref userpref;
 
