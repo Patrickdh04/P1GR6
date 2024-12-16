@@ -76,12 +76,14 @@ int main(void)
       {
           {"Star wars", "16", 8400, {"Adventure", "Fantasy", "Sci-fi"}, 9.8, {"Ewan McGregor", "Mathias", "Patrick"}, 0},
           {"Wall-e", "6", 5100, {"Adventure", "Sci-fi", "Animation"}, 9.2, {"Elissa Knight", "Nikolaj", "Gabby"}, 0},
-          {"Scary movie", "18", 5400, {"Horror", "Comedy", NULL}, 8.7, {"Anna Faris", "Dan", "Asker"}, 0}};
+          {"Scary movie", "18", 5400, {"Horror", "Comedy", NULL}, 8.7, {"Anna Faris", "Dan", "Asker"}, 0}
+      };
   seriesData seriesArray[3] =
       {
           {"stranger things", "16", 2400, {"Horror", "Adventure", NULL}, 8.2, {"Elleven", NULL, NULL}, 0, 0},
           {"Arcane", "13", 2000, {"Animation", NULL, NULL}, 10, {"Ella", "Joakim", NULL}, 0, 0},
-          {"Invincible", "18", 1600, {"Action", NULL, NULL}, 8.3, {"Big Guy", NULL, NULL}, 0, 0}};
+          {"Invincible", "18", 1600, {"Action", NULL, NULL}, 8.3, {"Big Guy", NULL, NULL}, 0, 0}
+      };
 
   int size_movie = sizeof(movieArray) / sizeof(movieArray[0]);
   int size_series = sizeof(seriesArray) / sizeof(seriesArray[0]);
@@ -109,6 +111,7 @@ int main(void)
 
   return 0;
 }
+
 //Points for movies
 void give_points(movieData movieArray[], pref userpref, int size)
 {
@@ -130,7 +133,6 @@ void give_points(movieData movieArray[], pref userpref, int size)
       }
     }
 
-    
     int actorMatched[3] = {0, 0, 0}; // Track if a user actor has been matched
     // check for actor matches
     for (int l = 0; l < 3 && movieArray[i].actors[l] != NULL; l++)
@@ -175,10 +177,8 @@ void give_points_series(seriesData seriesArray[], pref userpref, int size)
         {
             for (int j = 0; j < 3 && userpref.genres[j] != NULL; j++)
             {
-                printf("Comparing genre: %s with user genre: %s\n", seriesArray[i].genres[k], userpref.genres[j]); // DEBUG
                 if (strcmp(seriesArray[i].genres[k], userpref.genres[j]) == 0)
                 {
-                    printf("Match found! Incrementing score for genre: %s\n", seriesArray[i].genres[k]); // DEBUG
                     seriesArray[i].score++;
                     genreMatched[j] = 1;
                 }
@@ -221,6 +221,7 @@ int sort_movie(const void *a, const void *b)
   }
   return 0; // Equal score and rating
 }
+
 int sort_series(const void *a, const void *b)
 {
   const seriesData *seriesA = (const seriesData *)a;
@@ -241,7 +242,6 @@ int sort_series(const void *a, const void *b)
   }
   return 0; // Equal score and rating
 }
-
 
 void display(movieData movieArray[], int size_movie, seriesData seriesArray[], int size_series)
 {
