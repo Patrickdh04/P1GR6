@@ -14,7 +14,7 @@ int main(){
 int choice()
 {
     int choice;
-    const char *filename = "warning.vbs";
+    const char *filename = "Warning.vbs";
 
     // Try to open the file in read mode
     FILE *file = fopen(filename, "r");
