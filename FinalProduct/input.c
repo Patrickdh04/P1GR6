@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include<windows.h>
 
 #define AMOUNTOFGENRES 21
 
@@ -14,13 +15,16 @@ pref new_rec(void);
 conpref con_rec(void);
 int getdiff(void);
 
-int inputMain(char nc)
+int main(void)
 {
+    char nc;
     do
     { // New recommendation or continue with series?
         printf("Do you want a new recommendation or continue watching a series? (n for new / c for continue): \n");
-        scanf(" %c", &nc);
-    } while (nc != 'n' && nc != 'c'); // check if user typed n or c
+        Sleep(100);
+        nc = getchar();
+        while (getchar() != '\n'); 
+    } while (nc != 'n' && nc != 'c'); // check if user typed n or c, repeat if not
 
     if (nc == 'n')
     {
@@ -57,6 +61,7 @@ pref new_rec(void)
     do
     { // Get 3 genres
         printf("\nWrite 1 to 3 genres you want to see, separated by a comma (,) (Write '?' for a list of genres): \n");
+        Sleep(100);
         scanf(" %9s, %9s, %9s", &gp1, &gp2, &gp3);
 
         for (int i = 0; i < AMOUNTOFGENRES; i++)
@@ -83,7 +88,8 @@ pref new_rec(void)
     } while (g1 == -1); // repeat if no valid genre 1
 
 
-    printf("\nWrite 1 to 3 actors you want to see, separated by a comma (,): \n");
+    printf("\nWrite 0 to 3 actors you want to see, separated by a comma (,) (Press enter to skip): \n");
+    Sleep(100);
     scanf(" %49s, %49s, %49s", &actor1, &actor2, &actor3);
 
     do
@@ -95,12 +101,14 @@ pref new_rec(void)
     do
     {
         printf("\nWrite the minimum IMDb rating you want to look for (whole number between 1 and 9): \n");
+        Sleep(100);
         scanf(" %d", &min_rating);
     } while (min_rating < 0 || min_rating > 10); // repeat if not between 1 and 9
 
     do
     {
         printf("\nWrite the maximum IMDb rating you want to look for (whole number between 1 and 10): \n");
+        Sleep(100);
         scanf(" %d", &max_rating);
     } while (max_rating <= min_rating || max_rating > 10); // repeat if not bigger than min_rating and less than 10
 
