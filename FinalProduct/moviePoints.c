@@ -2,86 +2,73 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define NAMEMAXLENGTH 50
-#define GENREMAXLENGTH 100
-#define AGERATINGMAXLENGTH 10
-#define ACTORSMAXLENGTH 200
 
 typedef struct movieData movieData;
 typedef struct pref pref;
+typedef struct conpref conpref;
 
 // Prototypes
-void give_points(movieData movieArray[], pref userpref, int size);
-void give_points_series(seriesData seriesArray[], pref userpref, int size);
+void give_points_movies(movieData movies[], pref newMovie, int size);
+void give_points_series(movieData series[], pref newMovie, int size);
 int sort_movie(const void *a, const void *b);
 int sort_series(const void *a, const void *b);
-void display(movieData movieArray[], int size_movie, seriesData seriesArray[], int size_series);
-int main(void)
+void display(movieData *movies, int moviesLength, movieData *series, int seriesLength);
+void displayContinue(movieData *conWatchData);
+
+int moviePointsMain(movieData *movies, movieData *series, pref newMovie, int *sizeOfMovies, int *sizeOfSeries, char nc, movieData *conWatchData, conpref conWatch)
 {
-  pref userpref;
-  for (int i = 0; i < 3; i++)
+  if (nc == 'n')
   {
-    userpref.genres[i] = malloc(NAMEMAXLENGTH * sizeof(char)); // Allocate memory for each genre
-    printf("Input genre %d: \n", i + 1);
-    scanf(" %s", userpref.genres[i]);
-  }
-  for (int j = 0; j < 3; j++)
-  {
-    userpref.actors[j] = malloc(NAMEMAXLENGTH * sizeof(char)); // Allocate memory for each genre
-    printf("Input actor %d: \n", j + 1);
-    scanf(" %[^\n]s", userpref.actors[j]);
-  }
-  printf("Input time watch: \n");
-  scanf(" %d", &userpref.timetowatch);
-  userpref.timetowatch *= 60;
-  movieData movieArray[3] =
-      {
-          {"Star wars", "16", 8400, {"Adventure", "Fantasy", "Sci-fi"}, 9.8, {"Ewan McGregor", "Mathias", "Patrick"}, 0},
-          {"Wall-e", "6", 5100, {"Adventure", "Sci-fi", "Animation"}, 9.2, {"Elissa Knight", "Nikolaj", "Gabby"}, 0},
-          {"Scary movie", "18", 5400, {"Horror", "Comedy", NULL}, 8.7, {"Anna Faris", "Dan", "Asker"}, 0}
-      };
-  seriesData seriesArray[3] =
-      {
-          {"stranger things", "16", 2400, {"Horror", "Adventure", NULL}, 8.2, {"Elleven", NULL, NULL}, 0, 0},
-          {"Arcane", "13", 2000, {"Animation", NULL, NULL}, 10, {"Ella", "Joakim", NULL}, 0, 0},
-          {"Invincible", "18", 1600, {"Action", NULL, NULL}, 8.3, {"Big Guy", NULL, NULL}, 0, 0}
-      };
-  int size_movie = sizeof(movieArray) / sizeof(movieArray[0]);
-  int size_series = sizeof(seriesArray) / sizeof(seriesArray[0]);
-  for (int i = 0; i < size_series; i++)
-  {
-    if (seriesArray[i].duration > 0) // Ensure division is valid
+    int seriesLength = *sizeOfSeries;
+    int moviesLength = *sizeOfMovies;
+
+    for (int i = 0; i < seriesLength; i++)
     {
-      seriesArray[i].episodes = userpref.timetowatch / seriesArray[i].duration;
+      if (series[i].duration > 0) // Ensure division is valid
+      {
+        series[i].episodes = newMovie.timetowatch / series[i].duration;
+      }
+      else
+      {
+        series[i].episodes + 0; // Handle cases where the series has no episodes
+      }
     }
-    else
-    {
-      seriesArray[i].episodes + 0; // Handle cases where the series has no episodes
-    }
+    // give points to movies and series
+    give_points_movies(movies, newMovie, moviesLength);
+    give_points_series(series, newMovie, seriesLength);
+    // sort points for movies and series
+    qsort(movies, moviesLength, sizeof(movieData), sort_movie);
+    qsort(series, seriesLength, sizeof(movieData), sort_series);
+    display(movies, moviesLength, series, seriesLength);
   }
-  // give points to movies and series
-  give_points(movieArray, userpref, size_movie);
-  give_points_series(seriesArray, userpref, size_series);
-  // sort points for movies and series
-  qsort(movieArray, size_movie, sizeof(movieData), sort_movie);
-  qsort(seriesArray, size_series, sizeof(seriesData), sort_series);
-  display(movieArray, size_movie, seriesArray, size_series);
+  else if (nc == 'c')
+  {
+    conWatchData->episodes = conWatch.timetowatch / conWatchData->duration;
+    displayContinue(conWatchData);
+  }
+  else
+  {
+    printf("Error");
+  }
+
   return 0;
 }
-//Points for movies
-void give_points(movieData movieArray[], pref userpref, int size)
+// Points for movies
+void give_points_movies(movieData movies[], pref newMovie, int size)
 {
   for (int i = 0; i < size; i++)
   {
+    movies[i].score = 0;
+
     int genreMatched[3] = {0, 0, 0}; // Track if a user genre has been matched
     // Check for genre matches
-    for (int k = 0; k < 3 && movieArray[i].genres[k] != NULL; k++)
+    for (int k = 0; k < 3 && movies[i].genre[k] != NULL; k++)
     {
-      for (int j = 0; j < 3 && userpref.genres[j] != NULL; j++)
+      for (int j = 0; j < 3 && newMovie.genres[j] != NULL; j++)
       {
-        if (!genreMatched[j] && strcmp(movieArray[i].genres[k], userpref.genres[j]) == 0)
+        if (!genreMatched[j] && strcmp(movies[i].genre[k], newMovie.genres[j]) == 0)
         {
-          movieArray[i].score++;
+          movies[i].score++;
           genreMatched[j] = 1;
           break;
         }
@@ -89,66 +76,67 @@ void give_points(movieData movieArray[], pref userpref, int size)
     }
     int actorMatched[3] = {0, 0, 0}; // Track if a user actor has been matched
     // check for actor matches
-    for (int l = 0; l < 3 && movieArray[i].actors[l] != NULL; l++)
+    for (int l = 0; l < 3 && movies[i].actor[l] != NULL; l++)
     {
-      for (int j = 0; j < 3 && userpref.actors[j] != NULL; j++)
+      for (int j = 0; j < 3 && newMovie.actors[j] != NULL; j++)
       {
-        if (!actorMatched[j] && strcmp(movieArray[i].actors[l], userpref.actors[j]) == 0)
+        if (!actorMatched[j] && strcmp(movies[i].actor[l], newMovie.actors[j]) == 0)
         {
-          movieArray[i].score++;
+          movies[i].score++;
           actorMatched[j] = 1;
           break;
         }
       }
     }
     // Points based on time-to-watch
-    int timeDiff = userpref.timetowatch * 60 - movieArray[i].duration;
+    int timeDiff = newMovie.timetowatch * 60 - movies[i].duration;
     if (timeDiff <= 300)
     {
-      movieArray[i].score += 3;
+      movies[i].score += 3;
     }
     else if (timeDiff <= 600)
     {
-      movieArray[i].score += 2;
+      movies[i].score += 2;
     }
     else if (timeDiff <= 900)
     {
-      movieArray[i].score += 1;
+      movies[i].score += 1;
     }
   }
 }
 // Points for series
-void give_points_series(seriesData seriesArray[], pref userpref, int size)
+void give_points_series(movieData series[], pref newMovie, int size)
 {
-    for (int i = 0; i < size; i++)
+  for (int i = 0; i < size; i++)
+  {
+    series[i].score = 0;
+    int genreMatched[3] = {0, 0, 0}; // Track if a user genre has been matched
+    // Check for genre matches
+    for (int k = 0; k < 3 && series[i].genre[k] != NULL; k++)
     {
-        int genreMatched[3] = {0, 0, 0}; // Track if a user genre has been matched
-        // Check for genre matches
-        for (int k = 0; k < 3 && seriesArray[i].genres[k] != NULL; k++)
+      for (int j = 0; j < 3 && newMovie.genres[j] != NULL; j++)
+      {
+        if (strcmp(series[i].genre[k], newMovie.genres[j]) == 0)
         {
-            for (int j = 0; j < 3 && userpref.genres[j] != NULL; j++)
-            {
-                if (strcmp(seriesArray[i].genres[k], userpref.genres[j]) == 0)
-                {
-                    seriesArray[i].score++;
-                    genreMatched[j] = 1;
-                }
-            }
+          series[i].score++;
+          genreMatched[j] = 1;
         }
-        int actorMatched[3] = {0, 0, 0}; // Track if a user actor has been matched
-        // check for actor matches
-        for (int l = 0; l < 3 && seriesArray[i].actors[l] != NULL; l++)
-        {
-            for (int j = 0; j < 3 && userpref.actors[j] != NULL; j++)
-            {
-                if (strcmp(seriesArray[i].actors[l], userpref.actors[j]) == 0)
-                {
-                    seriesArray[i].score++;
-                    actorMatched[j] = 1;
-                }
-            }
-        }
+      }
     }
+    int actorMatched[3] = {0, 0, 0}; // Track if a user actor has been matched
+    // check for actor matches
+    for (int l = 0; l < 3 && series[i].actor[l] != NULL; l++)
+    {
+      for (int j = 0; j < 3 && newMovie.actors[j] != NULL; j++)
+      {
+        if (strcmp(series[i].actor[l], newMovie.actors[j]) == 0)
+        {
+          series[i].score++;
+          actorMatched[j] = 1;
+        }
+      }
+    }
+  }
 }
 int sort_movie(const void *a, const void *b)
 {
@@ -172,8 +160,8 @@ int sort_movie(const void *a, const void *b)
 }
 int sort_series(const void *a, const void *b)
 {
-  const seriesData *seriesA = (const seriesData *)a;
-  const seriesData *seriesB = (const seriesData *)b;
+  const movieData *seriesA = (const movieData *)a;
+  const movieData *seriesB = (const movieData *)b;
   // Sort primarily by score
   if (seriesB->score != seriesA->score)
   {
@@ -190,28 +178,62 @@ int sort_series(const void *a, const void *b)
   }
   return 0; // Equal score and rating
 }
-void display(movieData movieArray[], int size_movie, seriesData seriesArray[], int size_series)
+void display(movieData *movies, int moviesLength, movieData *series, int seriesLength)
 {
   // display movie
   printf("These are the movie recommendations: \n\n");
-  printf("%-16s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "TEST-SCORE: "); // "TEST-SCORE" TEMPORARY
-  printf("-----------------------------------------------------------");
-  for (int i = 0; i < size_movie; i++)
+  printf("%-35s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "TEST-SCORE: "); // "TEST-SCORE" TEMPORARY
+  printf("--------------------------------------------------------------------------");
+  if (moviesLength < 5)
   {
-    printf("\n%-16s%-3d min         %-16.1lf%-16d",
-           movieArray[i].title,
-           movieArray[i].duration / 60,
-           movieArray[i].rating,
-           movieArray[i].score); // temporary
+    for (int i = 0; i < moviesLength; i++)
+    {
+      printf("\n%-35.30s%-3d min         %-16.1lf%-16d",
+             movies[i].title,
+             movies[i].duration / 60,
+             movies[i].rating,
+             movies[i].score); // temporary
+    }
   }
+  else
+  {
+    for (int i = 0; i < 5; i++)
+    {
+      printf("\n%-35.30s%-3d min         %-16.1lf%-16d",
+             movies[i].title,
+             movies[i].duration / 60,
+             movies[i].rating,
+             movies[i].score); // temporary
+    }
+  }
+
   // display serie
   printf("\n\nThese are the series recommendations: \n\n");
-  printf("%-16s%-16s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:", "Test-Score");
-  printf("-----------------------------------------------------------\n");
-  for (int i = 0; i < size_series; i++)
+  printf("%-35s%-16s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:", "Test-Score");
+  printf("--------------------------------------------------------------------------\n");
+  if (seriesLength < 5)
   {
-    printf("%-16s%-3d min         %-16.1lf%-16d%-16d\n",
-           seriesArray[i].title, seriesArray[i].duration / 60,
-           seriesArray[i].rating, seriesArray[i].episodes, seriesArray[i].score);
+    for (int i = 0; i < seriesLength; i++)
+    {
+      printf("%-35.30s%-3d min         %-16.1lf%-16d%-16d\n",
+             series[i].title, series[i].duration / 60,
+             series[i].rating, series[i].episodes, series[i].score);
+    }
   }
+  else
+  {
+    for (int i = 0; i < 5; i++)
+    {
+      printf("%-35.30s%-3d min         %-16.1lf%-16d%-16d\n",
+             series[i].title, series[i].duration / 60,
+             series[i].rating, series[i].episodes, series[i].score);
+    }
+  }
+}
+
+void displayContinue(movieData *conWatchData)
+{
+  printf("%-35s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:");
+  printf("--------------------------------------------------------------------------\n");
+  printf("%-35.30s%-3d min         %-16.1lf%-16d\n", conWatchData->title, conWatchData->duration / 60, conWatchData->rating, conWatchData->episodes);
 }

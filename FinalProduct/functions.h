@@ -15,15 +15,11 @@
 
 struct pref
 {
-    char genre1[10];
+    char genres[MAXAMOUNTOFGENRES][GENREMAXLENGTH];
     int genrepref1;
-    char genre2[10];
     int genrepref2;
-    char genre3[10];
     int genrepref3;
-    char actor1[50];
-    char actor2[50];
-    char actor3[50];
+    char actors[MAXAMOUNTOFACTORS][ACTORSMAXLENGTH];
     int min;
     int max;
     int timetowatch;
@@ -46,7 +42,9 @@ struct movieData
     double rating;
     char actor[MAXAMOUNTOFACTORS][ACTORSMAXLENGTH];
     int episodes;
+    int score;
 };
 
 int inputMain(char *nc, struct pref *newMovie, struct conpref *conWatch);
-int movieSortMain(char nc, struct pref *newMovie, struct conpref *conWatch, struct movieData *movies, struct movieData *series);
+int movieSortMain(char nc, struct pref *newMovie, struct conpref *conWatch, struct movieData *movies, struct movieData *series, int *sizeOfMovies, int *sizeOfSeries, struct movieData *conWatchData);
+int moviePointsMain(struct movieData *movies, struct movieData *series, struct pref newMovie, int *sizeOfMovies, int *sizeOfSeries, char nc, struct movieData *conWatchData, struct conpref conWatch);

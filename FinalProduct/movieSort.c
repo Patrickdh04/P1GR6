@@ -25,15 +25,14 @@ typedef struct conpref conpref;
 void saveMovieData(movieData *moviesPreSort);
 void discard(movieData *movieToDiscard);
 void sortMovies(movieData *moviesPreSort, movieData *movies, movieData *series, char nc, pref newMovie,
-                char *conWatch, movieData *conWatchData);
+                char *conWatch, movieData *conWatchData, int *sizeOfMovies, int *sizeOfSeries);
 void copyData(movieData *movieArray, int index, movieData *moviesPreSort, int indexPreSort);
 
-int movieSortMain(char nc, pref *newMovie, conpref *conWatch, movieData *movies, movieData *series)
+int movieSortMain(char nc, pref *newMovie, conpref *conWatch, movieData *movies, movieData *series, int *sizeOfMovies, int *sizeOfSeries, movieData *conWatchData)
 {
     // As a lot of data has to be stored, we will save it using dynamic memory allocation
     movieData *moviesPreSort = malloc(MOVIESTOTAL * sizeof(movieData));
 
-    movieData conWatchData;
     pref newMovieValue = *newMovie;
 
     // Check if memory allocation is successful
@@ -44,43 +43,8 @@ int movieSortMain(char nc, pref *newMovie, conpref *conWatch, movieData *movies,
     }
 
     saveMovieData(moviesPreSort);
-    sortMovies(moviesPreSort, movies, series, nc, newMovieValue, conWatch->seriesName, &conWatchData);
+    sortMovies(moviesPreSort, movies, series, nc, newMovieValue, conWatch->seriesName, conWatchData, sizeOfMovies, sizeOfSeries);
     free(moviesPreSort);
-
-    if (nc == 'c' && (strcmp(conWatchData.title, conWatch->seriesName) == 0))
-    {
-        printf("Name: %s, isSeries: %i, ageRating: %s, duration: %i, g1: %s, g2: %s, g3: %s, rating:%lf,\nActor1: %s, Actor2: %s, Actor3: %s, Actor4: %s\n",
-               conWatchData.title, conWatchData.isSeries, conWatchData.ageRating, conWatchData.duration,
-               conWatchData.genre[0], conWatchData.genre[1], conWatchData.genre[2], conWatchData.rating,
-               conWatchData.actor[0], conWatchData.actor[1], conWatchData.actor[2], conWatchData.actor[3]);
-    }
-    else if (nc == 'c')
-    {
-        printf("Movie/series not found.\n");
-    }
-    else
-    {
-        // Print movies
-        for (int i = 0; i < 100; i++)
-        {
-            printf("MOVIES: title %i: %s, age: %s, dur: %i, g1: %s, g2: %s, g3: %s, isSer: %i, rati: %.1lf\nAc1:%s, Ac2: %s, Ac3: %s, Ac4: %s\n\n",
-                   i, movies[i].title, movies[i].ageRating, movies[i].duration, movies[i].genre[0],
-                   movies[i].genre[1], movies[i].genre[2], movies[i].isSeries, movies[i].rating,
-                   movies[i].actor[0], movies[i].actor[1], movies[i].actor[2], movies[i].actor[3]);
-        }
-
-        // Print series
-        for (int i = 0; i < 100; i++)
-        {
-            printf("SERIES: title %i: %s, age: %s, dur: %i, g1: %s, g2: %s, g3: %s, isSer: %i, rati: %.1lf\nAc1:%s, Ac2: %s, Ac3: %s, Ac4: %s\n\n",
-                   i, series[i].title, series[i].ageRating, series[i].duration, series[i].genre[0],
-                   series[i].genre[1], series[i].genre[2], series[i].isSeries, series[i].rating,
-                   series[i].actor[0], series[i].actor[1], series[i].actor[2], series[i].actor[3]);
-        }
-    }
-
-    free(movies);
-    free(series);
 
     return 0;
 }
@@ -250,7 +214,7 @@ void discard(movieData *movieToDiscard)
 }
 
 void sortMovies(movieData *moviesPreSort, movieData *movies, movieData *series, char nc, pref newMovie,
-                char *conWatch, movieData *conWatchData)
+                char *conWatch, movieData *conWatchData, int *sizeOfMovies, int *sizeOfSeries)
 {
     int isMovieCounter = 0, isSeriesCounter = 0;
     if (nc == 'n') // If user want a new recommendation
@@ -260,11 +224,11 @@ void sortMovies(movieData *moviesPreSort, movieData *movies, movieData *series, 
             // Check for search criteria
             for (int l = 0; l < MAXAMOUNTOFGENRES; l++)
             { // We check if movie match user's input
-                if ((strcmp(moviesPreSort[i].genre[l], newMovie.genre1) == 0 ||
-                     strcmp(moviesPreSort[i].genre[l], newMovie.genre2) == 0 ||
-                     strcmp(moviesPreSort[i].genre[l], newMovie.genre3) == 0 ||
-                     (newMovie.genre1[0] == '\0' && newMovie.genre2[0] == '\0' &&
-                      newMovie.genre3[0] == '\0')) &&
+                if ((strcmp(moviesPreSort[i].genre[l], newMovie.genres[0]) == 0 ||
+                     strcmp(moviesPreSort[i].genre[l], newMovie.genres[1]) == 0 ||
+                     strcmp(moviesPreSort[i].genre[l], newMovie.genres[2]) == 0 ||
+                     (newMovie.genres[0][0] == '\0' && newMovie.genres[1][0] == '\0' &&
+                      newMovie.genres[2][0] == '\0')) &&
                     (moviesPreSort[i].ageRating[0] == newMovie.ageRating || moviesPreSort[i].ageRating[0] == 'n') &&
                     (moviesPreSort[i].rating >= newMovie.min && moviesPreSort[i].rating <= newMovie.max) &&
                     moviesPreSort[i].duration <= newMovie.timetowatch)
@@ -302,6 +266,9 @@ void sortMovies(movieData *moviesPreSort, movieData *movies, movieData *series, 
         printf("Error: No command was found");
         exit(EXIT_FAILURE);
     }
+
+    *sizeOfSeries = isSeriesCounter;
+    *sizeOfMovies = isMovieCounter;
 
     return;
 }

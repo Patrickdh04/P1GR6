@@ -15,7 +15,7 @@ pref new_rec(void);
 conpref con_rec(void);
 int getdiff(void);
 
-int main(char *nc, pref *newMovie, conpref *conWatch)
+int inputMain(char *nc, pref *newMovie, conpref *conWatch)
 {
     pref movie;
     conpref conWatchMovie;
@@ -141,16 +141,16 @@ pref new_rec(void)
 
     pref preference;
     // create struct of data
-    strcpy(preference.genre1, genre[g1]);
+    strcpy(preference.genres[0], genre[g1]);
     preference.genrepref1 = g1;
-    strcpy(preference.genre2, genre[g2]);
+    strcpy(preference.genres[1], genre[g2]);
     preference.genrepref2 = g2;
-    strcpy(preference.genre3, genre[g3]);
+    strcpy(preference.genres[2], genre[g3]);
     preference.genrepref3 = g3;
 
-    strcpy(preference.actor1, actor1);
-    strcpy(preference.actor2, actor2);
-    strcpy(preference.actor3, actor3);
+    strcpy(preference.actors[0], actor1);
+    strcpy(preference.actors[1], actor2);
+    strcpy(preference.actors[2], actor3);
 
     preference.min = min_rating;
     preference.max = max_rating;
