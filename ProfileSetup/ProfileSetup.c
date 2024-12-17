@@ -5,7 +5,7 @@
 
 #define MAX_LENGTH 100
 
-//Function prototypes
+//Prototypes
 void createProfile();
 void viewProfile();
 void listProfiles();
@@ -70,8 +70,8 @@ void createProfile() {
     }
 
     //Input initial settings
-    printf("Enter initial settings for the profile (one line): ");
-    getchar(); // Clear the newline character from the buffer
+    printf("Enter initial settings for the profile: ");
+    getchar(); //Clears the leftover '\n', but can also use %[^\n]
     fgets(settings, MAX_LENGTH, stdin);
     fprintf(file, "%s", settings);
     fclose(file);
@@ -97,7 +97,8 @@ void viewProfile() {
         printf("Profile '%s' does not exist.\n", profileName);
         return;
     }
-
+    
+    //Checks if file exists
     snprintf(filename, MAX_LENGTH, "%s.txt", profileName);
     file = fopen(filename, "r");
     if (file == NULL) {
@@ -124,7 +125,7 @@ void viewProfile() {
         }
 
         printf("Enter new settings to add:\n");
-        getchar();
+        getchar(); //Clears the leftover '\n'
         fgets(line, MAX_LENGTH, stdin);
         fprintf(file, "%s", line);
         fclose(file);
@@ -145,7 +146,7 @@ void listProfiles() {
 
     printf("\nExisting Profiles:\n");
     while (fgets(profileName, MAX_LENGTH, file) != NULL) {
-        profileName[strcspn(profileName, "\n")] = '\0'; 
+        profileName[strcspn(profileName, "\n")] = '\0'; //removes the newline
         printf("- %s\n", profileName);
     }
 
@@ -162,7 +163,7 @@ int profileExists(const char* profileName) {
     }
 
     while (fgets(existingProfile, MAX_LENGTH, file) != NULL) {
-        existingProfile[strcspn(existingProfile, "\n")] = '\0'; // Remove trailing newline
+        existingProfile[strcspn(existingProfile, "\n")] = '\0';
         if (strcmp(existingProfile, profileName) == 0) {
             fclose(file);
             return 1; //Profile exists
