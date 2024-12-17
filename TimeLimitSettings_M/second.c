@@ -17,10 +17,10 @@ void warnings(int choice, int time)
     switch(choice)
     {
     case 1:
-        system("warning.vbs");
+        system("Warning.vbs");
         break;
     case 2:
-        system("warning.vbs");
+        system("Warning.vbs");
         printf("\ntrying to close Netflix and chrome\n");
         system("C:\\WINDOWS\\System32\\taskkill /IM chrome.exe");
         system("C:\\WINDOWS\\System32\\taskkill /IM netflix.exe");
