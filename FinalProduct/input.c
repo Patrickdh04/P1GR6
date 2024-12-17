@@ -31,12 +31,12 @@ int inputMain(char *nc, pref *newMovie, conpref *conWatch)
     if (choice == 'n')
     {
         movie = new_rec(); // run new recommendation data collection
-        newMovie = &movie;
+        *newMovie = movie;
     }
     else if (choice == 'c')
     {
         conWatchMovie = con_rec(); // run continue series data collection
-        conWatch = &conWatchMovie;
+        *conWatch = conWatchMovie;
     }
     else
     { // if somehow nc is not n or c
@@ -160,6 +160,7 @@ conpref con_rec(void)
     // create struct of data
     strcpy(con_series.seriesName, seriesName);
     con_series.timetowatch = diff;
+    return con_series;    
 }
 
 int getdiff(void)

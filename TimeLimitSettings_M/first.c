@@ -8,7 +8,6 @@ int main(){
     int result = choice();
 
     return EXIT_SUCCESS;
-
 }
 
 int choice()
@@ -28,7 +27,7 @@ int choice()
             perror("Error creating file");
             return EXIT_FAILURE;
         }
-        fprintf(file, "x=msgbox(\"Warning, you have went over your time\", 0, \"Attention\")"); //the command going in the file
+        fprintf(file, "x=msgbox(\"Warning, you are over your time\", 0, \"Attention\")"); //the command going in the file
         fclose(file);
     }
 

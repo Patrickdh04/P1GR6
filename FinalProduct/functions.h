@@ -45,7 +45,8 @@ struct movieData
     char genre[MAXAMOUNTOFGENRES][GENREMAXLENGTH];
     double rating;
     char actor[MAXAMOUNTOFACTORS][ACTORSMAXLENGTH];
+    int episodes;
 };
 
 int inputMain(char *nc, struct pref *newMovie, struct conpref *conWatch);
-int movieSortMain(char nc, struct pref *newMovie, struct conpref *conWatch);
+int movieSortMain(char nc, struct pref *newMovie, struct conpref *conWatch, struct movieData *movies, struct movieData *series);
