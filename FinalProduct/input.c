@@ -15,7 +15,7 @@ pref new_rec(void);
 conpref con_rec(void);
 int getdiff(void);
 
-int inputMain(char *nc, pref *newMovie, conpref *conWatch)
+int main(char *nc, pref *newMovie, conpref *conWatch)
 {
     pref movie;
     conpref conWatchMovie;
@@ -53,9 +53,9 @@ pref new_rec(void)
 {
 
     int g1 = -1, g2 = -1, g3 = -1;                    // g1-2-3 default index -1
-    char gp1[12] = "?", gp2[12] = "?", gp3[12] = "?"; // 3 genre preferences
+    char gp1[15] = "?", gp2[15] = "?", gp3[15] = "?"; // 3 genre preferences
     char actor1[50] = "?", actor2[50] = "?", actor3[50] = "?";
-    char genre[AMOUNTOFGENRES][12] = {"Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family",
+    char genre[AMOUNTOFGENRES][15] = {"Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family",
                           "Fantasy", "History", "Horror", "Musical", "Mystery", "Reality-TV", "Romance", "Sci-Fi", "Short", "Sport", "Thriller", "War"};
 
     char ar;
@@ -66,37 +66,55 @@ pref new_rec(void)
 
     do
     { // Get 3 genres
-        printf("\nWrite 1 to 3 genres you want to see, separated by a comma (,) (Write '?' for a list of genres): \n");
+        printf("\nWrite 1 genre you want to see, separated by a comma (,) (Write '?' for a list of genres): \n");
         Sleep(100);
-        scanf(" %[^\n]%*s, %[^\n]%*s, %[^\n]%*s", &gp1, &gp2, &gp3);
+        scanf(" %s", &gp1);
 
-        for (int i = 0; i < AMOUNTOFGENRES; i++)
-        {
+        for (int i = 0; i < AMOUNTOFGENRES; i++) {
             if (strcmp(gp1, genre[i]) == 0)
             {
                 g1 = i;
             }
-            else if (strcmp(gp2, genre[i]) == 0)
-            {
-                g2 = i;
-            }
-            else if (strcmp(gp3, genre[i]) == 0)
-            {
-                g3 = i;
-            } // Get the 21 genre indexes 0-20
         }
 
         if (strcmp(gp1, "?") == 0)
         { // print list of genres
-            printf("\nAction, Adventure, Animation, Biography, Comedy, Crime, Drama, Family, \nFantasy, History, Horror, Musical, Mystery, Reality-TV, Romance, Sci-Fi, Short, Sport, Thriller, Documentary, War");
+            printf("\nAction, Adventure, Animation, Biography, Comedy, Crime, Drama, Family, Fantasy, History, Horror, \nMusical, Mystery, Reality-TV, Romance, Sci-Fi, Short, Sport, Thriller, Documentary, War\n");
         }
 
-    } while (strcmp(gp1, "?") == 0); // repeat if no valid genre 1
+    } while (g1 == -1); // repeat if no valid genre 1
 
-
-    printf("\nWrite 0 to 3 actors you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    printf("\nWrite a second genre you want to see, separated by a comma (,) (Write '?' to skip): \n");
     Sleep(100);
-    scanf(" %49s, %49s, %49s", &actor1, &actor2, &actor3);
+    scanf(" %s", &gp2);
+
+    printf("\nWrite a third genre you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    Sleep(100);
+    scanf(" %s", &gp3);
+
+    for (int i = 0; i < AMOUNTOFGENRES; i++) {
+        if (strcmp(gp2, genre[i]) == 0)
+        {
+            g2 = i;
+        }
+        else if (strcmp(gp3, genre[i]) == 0)
+        {
+            g3 = i;
+        } // Get the 21 genre indexes 0-20
+    }
+
+
+    printf("\nWrite 1 actor you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    Sleep(100);
+    scanf(" %s", &actor1);
+
+    printf("\nWrite a second actor you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    Sleep(100);
+    scanf(" %s", &actor2);
+
+    printf("\nWrite a third actor you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    Sleep(100);
+    scanf(" %s", &actor3);
 
     do
     {
