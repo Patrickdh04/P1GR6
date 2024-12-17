@@ -18,7 +18,6 @@
 #define DURATIONMAXLENGTH 10
 
 typedef struct movieData movieData;
-
 typedef struct pref pref;
 typedef struct conpref conpref;
 
@@ -29,13 +28,10 @@ void sortMovies(movieData *moviesPreSort, movieData *movies, movieData *series, 
                 char *conWatch, movieData *conWatchData);
 void copyData(movieData *movieArray, int index, movieData *moviesPreSort, int indexPreSort);
 
-int movieSortMain(char nc, pref *newMovie, conpref *conWatch)
+int movieSortMain(char nc, pref *newMovie, conpref *conWatch, movieData *movies, movieData *series)
 {
     // As a lot of data has to be stored, we will save it using dynamic memory allocation
     movieData *moviesPreSort = malloc(MOVIESTOTAL * sizeof(movieData));
-
-    movieData *movies = malloc(MOVIESTOTAL * sizeof(movieData));
-    movieData *series = malloc(MOVIESTOTAL * sizeof(movieData));
 
     movieData conWatchData;
     pref newMovieValue = *newMovie;
