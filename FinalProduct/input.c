@@ -66,7 +66,7 @@ pref new_rec(void)
 
     do
     { // Get 3 genres
-        printf("\nWrite 1 genre you want to see, separated by a comma (,) (Write '?' for a list of genres): \n");
+        printf("\nWrite 1 genre you want to see (Write '?' for a list of genres): \n");
         Sleep(100);
         scanf(" %s", &gp1);
 
@@ -84,11 +84,11 @@ pref new_rec(void)
 
     } while (g1 == -1); // repeat if no valid genre 1
 
-    printf("\nWrite a second genre you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    printf("\nWrite a second genre you want to see (Write '?' to skip): \n");
     Sleep(100);
     scanf(" %s", &gp2);
 
-    printf("\nWrite a third genre you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    printf("\nWrite a third genre you want to see (Write '?' to skip): \n");
     Sleep(100);
     scanf(" %s", &gp3);
 
@@ -104,17 +104,17 @@ pref new_rec(void)
     }
 
 
-    printf("\nWrite 1 actor you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    printf("\nWrite 1 actor you want to see (Write '?' to skip): \n");
     Sleep(100);
-    scanf(" %s", &actor1);
+    scanf(" %[^\n]%*c", &actor1);
 
-    printf("\nWrite a second actor you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    printf("\nWrite a second actor you want to see (Write '?' to skip): \n");
     Sleep(100);
-    scanf(" %s", &actor2);
+    scanf(" %[^\n]%*c", &actor2);
 
-    printf("\nWrite a third actor you want to see, separated by a comma (,) (Write '?' to skip): \n");
+    printf("\nWrite a third actor you want to see (Write '?' to skip): \n");
     Sleep(100);
-    scanf(" %s", &actor3);
+    scanf(" %[^\n]%*c", &actor3);
 
     do
     {
