@@ -13,28 +13,25 @@ int main()
 
 void warnings(int choice, int time)
 {
-    while (choice == 1)
+    sleep(time);
+    switch(choice)
     {
-        sleep(time);
+    case 1:
         system("warning.vbs");
         break;
-    }
-
-    while (choice == 2)
-    {
-        sleep(time);
+    case 2:
         system("warning.vbs");
+        printf("\ntrying to close Netflix and chrome\n");
         system("C:\\WINDOWS\\System32\\taskkill /IM chrome.exe");
         system("C:\\WINDOWS\\System32\\taskkill /IM netflix.exe");
-        system("C:\\WINDOWS\\System32\\taskkill /pid 18356");
+        break;
+    case 3:
+        printf("\nClosing the computer in 5 minutes\n");
+        system("C:\\WINDOWS\\System32\\shutdown /s /t 300");
+        break;
+    
+    default:
         break;
     }
-
-    while (choice == 3)
-    {
-
-        sleep(time);
-        system("C:\\WINDOWS\\System32\\shutdown /s /t 600");
-        break;
     }
-}
+

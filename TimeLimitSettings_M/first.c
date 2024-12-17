@@ -14,7 +14,7 @@ int main(){
 int choice()
 {
     int choice;
-    const char *filename = "warning.vbs";
+    const char *filename = "Warning.vbs";
 
     // Try to open the file in read mode
     FILE *file = fopen(filename, "r");
@@ -22,13 +22,13 @@ int choice()
         // If the file exists, close it and do nothing
         fclose(file);
     } else {
-        // If the file does not exist, create and write to it
+        // If the file does not exist, make it
         file = fopen(filename, "w");
         if (!file) {
             perror("Error creating file");
             return EXIT_FAILURE;
         }
-        fprintf(file, "x=msgbox(\"Warning, you have went over your time\", 0, \"Attention\")");
+        fprintf(file, "x=msgbox(\"Warning, you have went over your time\", 0, \"Attention\")"); //the command going in the file
         fclose(file);
     }
 
