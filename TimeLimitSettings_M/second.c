@@ -14,7 +14,7 @@ int main()
 void warnings(int choice, int time)
 {
     sleep(time);
-    switch(choice)
+    switch (choice)
     {
     case 1:
         system("Warning.vbs");
@@ -29,9 +29,8 @@ void warnings(int choice, int time)
         printf("\nClosing the computer in 5 minutes\n");
         system("C:\\WINDOWS\\System32\\shutdown /s /t 300");
         break;
-    
+
     default:
         break;
     }
-    }
-
+}
