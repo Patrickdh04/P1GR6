@@ -7,7 +7,6 @@
 #define GENREMAXLENGTH 100
 #define AGERATINGMAXLENGTH 10
 #define ACTORSMAXLENGTH 200
-
 typedef struct movieData
 {
   char title[NAMEMAXLENGTH];
@@ -18,7 +17,6 @@ typedef struct movieData
   char *actors[ACTORSMAXLENGTH];
   int score;
 } movieData;
-
 typedef struct seriesData
 {
   char title[NAMEMAXLENGTH];
@@ -30,7 +28,6 @@ typedef struct seriesData
   int score;
   int episodes;
 } seriesData;
-
 typedef struct pref
 {
   char *genres[GENREMAXLENGTH];
@@ -44,14 +41,12 @@ typedef struct pref
   int timetowatch;
   char ageRating;
 } pref;
-
 // Prototypes
 void give_points(movieData movieArray[], pref userpref, int size);
 void give_points_series(seriesData seriesArray[], pref userpref, int size);
 int sort_movie(const void *a, const void *b);
 int sort_series(const void *a, const void *b);
 void display(movieData movieArray[], int size_movie, seriesData seriesArray[], int size_series);
-
 int main(void)
 {
   pref userpref;
@@ -61,14 +56,12 @@ int main(void)
     printf("Input genre %d: \n", i + 1);
     scanf(" %s", userpref.genres[i]);
   }
-
   for (int j = 0; j < 3; j++)
   {
     userpref.actors[j] = malloc(NAMEMAXLENGTH * sizeof(char)); // Allocate memory for each genre
     printf("Input actor %d: \n", j + 1);
     scanf(" %[^\n]s", userpref.actors[j]);
   }
-
   printf("Input time watch: \n");
   scanf(" %d", &userpref.timetowatch);
   userpref.timetowatch *= 60;
@@ -84,10 +77,8 @@ int main(void)
           {"Arcane", "13", 2000, {"Animation", NULL, NULL}, 10, {"Ella", "Joakim", NULL}, 0, 0},
           {"Invincible", "18", 1600, {"Action", NULL, NULL}, 8.3, {"Big Guy", NULL, NULL}, 0, 0}
       };
-
   int size_movie = sizeof(movieArray) / sizeof(movieArray[0]);
   int size_series = sizeof(seriesArray) / sizeof(seriesArray[0]);
-
   for (int i = 0; i < size_series; i++)
   {
     if (seriesArray[i].duration > 0) // Ensure division is valid
@@ -102,23 +93,18 @@ int main(void)
   // give points to movies and series
   give_points(movieArray, userpref, size_movie);
   give_points_series(seriesArray, userpref, size_series);
-
   // sort points for movies and series
   qsort(movieArray, size_movie, sizeof(movieData), sort_movie);
   qsort(seriesArray, size_series, sizeof(seriesData), sort_series);
-
   display(movieArray, size_movie, seriesArray, size_series);
-
   return 0;
 }
-
 //Points for movies
 void give_points(movieData movieArray[], pref userpref, int size)
 {
   for (int i = 0; i < size; i++)
   {
     int genreMatched[3] = {0, 0, 0}; // Track if a user genre has been matched
-
     // Check for genre matches
     for (int k = 0; k < 3 && movieArray[i].genres[k] != NULL; k++)
     {
@@ -132,7 +118,6 @@ void give_points(movieData movieArray[], pref userpref, int size)
         }
       }
     }
-
     int actorMatched[3] = {0, 0, 0}; // Track if a user actor has been matched
     // check for actor matches
     for (int l = 0; l < 3 && movieArray[i].actors[l] != NULL; l++)
@@ -147,7 +132,6 @@ void give_points(movieData movieArray[], pref userpref, int size)
         }
       }
     }
-
     // Points based on time-to-watch
     int timeDiff = userpref.timetowatch * 60 - movieArray[i].duration;
     if (timeDiff <= 300)
@@ -164,14 +148,12 @@ void give_points(movieData movieArray[], pref userpref, int size)
     }
   }
 }
-
 // Points for series
 void give_points_series(seriesData seriesArray[], pref userpref, int size)
 {
     for (int i = 0; i < size; i++)
     {
         int genreMatched[3] = {0, 0, 0}; // Track if a user genre has been matched
-
         // Check for genre matches
         for (int k = 0; k < 3 && seriesArray[i].genres[k] != NULL; k++)
         {
@@ -184,7 +166,6 @@ void give_points_series(seriesData seriesArray[], pref userpref, int size)
                 }
             }
         }
-
         int actorMatched[3] = {0, 0, 0}; // Track if a user actor has been matched
         // check for actor matches
         for (int l = 0; l < 3 && seriesArray[i].actors[l] != NULL; l++)
@@ -200,7 +181,6 @@ void give_points_series(seriesData seriesArray[], pref userpref, int size)
         }
     }
 }
-
 int sort_movie(const void *a, const void *b)
 {
   const movieData *movieA = (const movieData *)a;
@@ -221,7 +201,6 @@ int sort_movie(const void *a, const void *b)
   }
   return 0; // Equal score and rating
 }
-
 int sort_series(const void *a, const void *b)
 {
   const seriesData *seriesA = (const seriesData *)a;
@@ -242,7 +221,6 @@ int sort_series(const void *a, const void *b)
   }
   return 0; // Equal score and rating
 }
-
 void display(movieData movieArray[], int size_movie, seriesData seriesArray[], int size_series)
 {
   // display movie
