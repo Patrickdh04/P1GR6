@@ -53,7 +53,7 @@ pref new_rec(void)
 {
 
     int g1 = -1, g2 = -1, g3 = -1;                    // g1-2-3 default index -1
-    char gp1[10] = "?", gp2[10] = "?", gp3[10] = "?"; // 3 genre preferences
+    char gp1[12] = "?", gp2[12] = "?", gp3[12] = "?"; // 3 genre preferences
     char actor1[50] = "?", actor2[50] = "?", actor3[50] = "?";
     char genre[AMOUNTOFGENRES][12] = {"Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family",
                           "Fantasy", "History", "Horror", "Musical", "Mystery", "Reality-TV", "Romance", "Sci-Fi", "Short", "Sport", "Thriller", "War"};
@@ -68,7 +68,7 @@ pref new_rec(void)
     { // Get 3 genres
         printf("\nWrite 1 to 3 genres you want to see, separated by a comma (,) (Write '?' for a list of genres): \n");
         Sleep(100);
-        scanf(" %9s, %9s, %9s", &gp1, &gp2, &gp3);
+        scanf(" %[^\n]%*s, %[^\n]%*s, %[^\n]%*s", &gp1, &gp2, &gp3);
 
         for (int i = 0; i < AMOUNTOFGENRES; i++)
         {
@@ -91,10 +91,10 @@ pref new_rec(void)
             printf("\nAction, Adventure, Animation, Biography, Comedy, Crime, Drama, Family, \nFantasy, History, Horror, Musical, Mystery, Reality-TV, Romance, Sci-Fi, Short, Sport, Thriller, Documentary, War");
         }
 
-    } while (g1 == -1); // repeat if no valid genre 1
+    } while (strcmp(gp1, "?") == 0); // repeat if no valid genre 1
 
 
-    printf("\nWrite 0 to 3 actors you want to see, separated by a comma (,) (Press enter to skip): \n");
+    printf("\nWrite 0 to 3 actors you want to see, separated by a comma (,) (Write '?' to skip): \n");
     Sleep(100);
     scanf(" %49s, %49s, %49s", &actor1, &actor2, &actor3);
 
@@ -102,6 +102,7 @@ pref new_rec(void)
     {
         printf("\nDo you want to be recommended 18+ films? (y/n): \n");
         scanf(" %c", &ar);
+        while (getchar() != '\n');
     } while (ar != 'y' && ar != 'n'); // repeat if no valid answer
 
     do
@@ -149,9 +150,9 @@ conpref con_rec(void)
     do
     { // Get series name
         printf("\nWrite the name of the series: \n");
-        scanf(" %49s", &seriesName);
+        scanf ("%[^\n]%*c", seriesName);
 
-    } while (seriesName == "?");
+    } while (strcmp(seriesName, "?") == 0);
 
     int diff = getdiff(); // Get time diff in seconds
 
