@@ -29,15 +29,16 @@ void sortMovies(movieData *moviesPreSort, movieData *movies, movieData *series, 
                 char *conWatch, movieData *conWatchData);
 void copyData(movieData *movieArray, int index, movieData *moviesPreSort, int indexPreSort);
 
-int movieSortMain(char nc, movieData newMovie)
+int movieSortMain(char nc, pref *newMovie, conpref *conWatch)
 {
-    movieData conWatchData;
-
     // As a lot of data has to be stored, we will save it using dynamic memory allocation
     movieData *moviesPreSort = malloc(MOVIESTOTAL * sizeof(movieData));
 
     movieData *movies = malloc(MOVIESTOTAL * sizeof(movieData));
     movieData *series = malloc(MOVIESTOTAL * sizeof(movieData));
+
+    movieData conWatchData;
+    pref newMovieValue = *newMovie;
 
     // Check if memory allocation is successful
     if (moviesPreSort == NULL || movies == NULL || series == NULL)
@@ -47,10 +48,10 @@ int movieSortMain(char nc, movieData newMovie)
     }
 
     saveMovieData(moviesPreSort);
-    sortMovies(moviesPreSort, movies, series, nc, newMovie, conWatch.seriesName, &conWatchData);
+    sortMovies(moviesPreSort, movies, series, nc, newMovieValue, conWatch->seriesName, &conWatchData);
     free(moviesPreSort);
 
-    if (nc == 'c' && (strcmp(conWatchData.title, conWatch.seriesName) == 0))
+    if (nc == 'c' && (strcmp(conWatchData.title, conWatch->seriesName) == 0))
     {
         printf("Name: %s, isSeries: %i, ageRating: %s, duration: %i, g1: %s, g2: %s, g3: %s, rating:%lf,\nActor1: %s, Actor2: %s, Actor3: %s, Actor4: %s\n",
                conWatchData.title, conWatchData.isSeries, conWatchData.ageRating, conWatchData.duration,

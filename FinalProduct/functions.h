@@ -47,5 +47,5 @@ struct movieData
     char actor[MAXAMOUNTOFACTORS][ACTORSMAXLENGTH];
 };
 
-int inputMain(char nc);
-int movieSortMain(char nc, movieData newMovie);
+int inputMain(char *nc, struct pref *newMovie, struct conpref *conWatch);
+int movieSortMain(char nc, struct pref *newMovie, struct conpref *conWatch);

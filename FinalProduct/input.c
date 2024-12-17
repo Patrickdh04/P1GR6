@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include<windows.h>
+#include <windows.h>
 
 #define AMOUNTOFGENRES 21
 
@@ -15,30 +15,36 @@ pref new_rec(void);
 conpref con_rec(void);
 int getdiff(void);
 
-int main(void)
+int inputMain(char *nc, pref *newMovie, conpref *conWatch)
 {
-    char nc;
+    pref movie;
+    conpref conWatchMovie;
+    char choice;
     do
     { // New recommendation or continue with series?
         printf("Do you want a new recommendation or continue watching a series? (n for new / c for continue): \n");
-        Sleep(100);
-        nc = getchar();
+        Sleep(100); 
+        scanf(" %c", &choice);
         while (getchar() != '\n'); 
-    } while (nc != 'n' && nc != 'c'); // check if user typed n or c, repeat if not
+    } while (choice != 'n' && choice != 'c'); // check if user typed n or c, repeat if not
 
-    if (nc == 'n')
+    if (choice == 'n')
     {
-        pref preference = new_rec(); // run new recommendation data collection
+        movie = new_rec(); // run new recommendation data collection
+        newMovie = &movie;
     }
-    else if (nc == 'c')
+    else if (choice == 'c')
     {
-        conpref series = con_rec(); // run continue series data collection
+        conWatchMovie = con_rec(); // run continue series data collection
+        conWatch = &conWatchMovie;
     }
     else
     { // if somehow nc is not n or c
         printf("Problem with program, stopping...");
         exit(EXIT_FAILURE);
     }
+
+    *nc = choice;
 
     return 0;
 }
