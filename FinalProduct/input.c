@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <windows.h>
+#include <unistd.h>
 
 #define AMOUNTOFGENRES 21
 
@@ -23,7 +23,7 @@ int inputMain(char *nc, pref *newMovie, conpref *conWatch)
     do
     { // New recommendation or continue with series?
         printf("Do you want a new recommendation or continue watching a series? (n for new / c for continue): \n");
-        Sleep(100); 
+         
         scanf(" %c", &choice);
         while (getchar() != '\n'); 
     } while (choice != 'n' && choice != 'c'); // check if user typed n or c, repeat if not
@@ -67,7 +67,7 @@ pref new_rec(void)
     do
     { // Get 3 genres
         printf("\nWrite 1 genre you want to see (Write '?' for a list of genres): \n");
-        Sleep(100);
+        
         scanf(" %s", &gp1);
 
         for (int i = 0; i < AMOUNTOFGENRES; i++) {
@@ -85,11 +85,11 @@ pref new_rec(void)
     } while (g1 == -1); // repeat if no valid genre 1
 
     printf("\nWrite a second genre you want to see (Write '?' to skip): \n");
-    Sleep(100);
+    
     scanf(" %s", &gp2);
 
     printf("\nWrite a third genre you want to see (Write '?' to skip): \n");
-    Sleep(100);
+    
     scanf(" %s", &gp3);
 
     for (int i = 0; i < AMOUNTOFGENRES; i++) {
@@ -105,15 +105,15 @@ pref new_rec(void)
 
 
     printf("\nWrite 1 actor you want to see (Write '?' to skip): \n");
-    Sleep(100);
+    
     scanf(" %[^\n]%*c", &actor1);
 
     printf("\nWrite a second actor you want to see (Write '?' to skip): \n");
-    Sleep(100);
+    
     scanf(" %[^\n]%*c", &actor2);
 
     printf("\nWrite a third actor you want to see (Write '?' to skip): \n");
-    Sleep(100);
+    
     scanf(" %[^\n]%*c", &actor3);
 
     do
@@ -126,14 +126,14 @@ pref new_rec(void)
     do
     {
         printf("\nWrite the minimum IMDb rating you want to look for (whole number between 1 and 9): \n");
-        Sleep(100);
+        
         scanf(" %d", &min_rating);
     } while (min_rating < 0 || min_rating > 10); // repeat if not between 1 and 9
 
     do
     {
         printf("\nWrite the maximum IMDb rating you want to look for (whole number between 1 and 10): \n");
-        Sleep(100);
+        
         scanf(" %d", &max_rating);
     } while (max_rating <= min_rating || max_rating > 10); // repeat if not bigger than min_rating and less than 10
 
