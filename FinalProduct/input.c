@@ -68,7 +68,7 @@ pref new_rec(void)
     { // Get 3 genres
         printf("\nWrite 1 genre you want to see (Write '?' for a list of genres): \n");
         
-        scanf(" %s", &gp1);
+        scanf(" %s", gp1);
 
         for (int i = 0; i < AMOUNTOFGENRES; i++) {
             if (strcmp(gp1, genre[i]) == 0)
@@ -86,11 +86,11 @@ pref new_rec(void)
 
     printf("\nWrite a second genre you want to see (Write '?' to skip): \n");
     
-    scanf(" %s", &gp2);
+    scanf(" %s", gp2);
 
     printf("\nWrite a third genre you want to see (Write '?' to skip): \n");
     
-    scanf(" %s", &gp3);
+    scanf(" %s", gp3);
 
     for (int i = 0; i < AMOUNTOFGENRES; i++) {
         if (strcmp(gp2, genre[i]) == 0)
@@ -106,15 +106,15 @@ pref new_rec(void)
 
     printf("\nWrite 1 actor you want to see (Write '?' to skip): \n");
     
-    scanf(" %[^\n]%*c", &actor1);
+    scanf(" %[^\n]%*c", actor1);
 
     printf("\nWrite a second actor you want to see (Write '?' to skip): \n");
     
-    scanf(" %[^\n]%*c", &actor2);
+    scanf(" %[^\n]%*c", actor2);
 
     printf("\nWrite a third actor you want to see (Write '?' to skip): \n");
     
-    scanf(" %[^\n]%*c", &actor3);
+    scanf(" %[^\n]%*c", actor3);
 
     do
     {
