@@ -1,17 +1,16 @@
+#include "functions.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_LENGTH 100
-
 // Prototypes
 void createProfile();
-void chooseProfile();
+void chooseProfile(char *profileName);
 void listProfiles();
-int profileExists(const char *profileName);
-void addProfileToFile(const char *profileName);
+int profileExists(char *profileName);
+void addProfileToFile(char *profileName);
 
-int profileMain(const char *profileName)
+void profileMain(char *profileName)
 {
     int choice;
 
@@ -30,7 +29,7 @@ int profileMain(const char *profileName)
             createProfile();
             break;
         case 2:
-            chooseProfile();
+            chooseProfile(profileName);
             break;
         case 3:
             listProfiles();
@@ -38,16 +37,16 @@ int profileMain(const char *profileName)
         default:
             printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 1 || choice != 2 || choice != 3);
+    } while (choice != 2);
 
-    return 0;
+    return;
 }
 
 // Create new profile
 void createProfile()
 {
-    char profileName[MAX_LENGTH];
-    char filename[MAX_LENGTH];
+    char profileName[MAXPROFILENAMELENGTH];
+    char filename[MAXPROFILENAMELENGTH];
     FILE *file;
 
     printf("Enter your profile name: ");
@@ -67,34 +66,33 @@ void createProfile()
 }
 
 // Choose and edit a profile
-void chooseProfile()
+void chooseProfile(char *profileName)
 {
-    char profileName[MAX_LENGTH];
-    char filename[MAX_LENGTH];
-    char line[MAX_LENGTH];
+    char filename[MAXPROFILENAMELENGTH];
+    char line[MAXPROFILENAMELENGTH];
     FILE *file;
 
     printf("Enter the profile name you would like to use: ");
-    scanf("%s", profileName);
+    scanf(" %s", profileName);
 
     // Check if the profile exists
     if (!profileExists(profileName))
     {
-        printf("Profile '%s' does not exist.\n", profileName);
-        return;
+        printf("Profile '%s' does not exist.\n", *profileName);
+        exit(0);
     }
 
     // Checks if file exists
-    snprintf(filename, MAX_LENGTH, "%s.txt", profileName);
+    snprintf(filename, MAXPROFILENAMELENGTH, "%s.txt", *profileName);
     file = fopen(filename, "r");
     if (file == NULL)
     {
         perror("Error opening profile file");
-        return;
+        exit(0);
     }
 
-    printf("\nProfile Settings for '%s':\n", profileName);
-    while (fgets(line, MAX_LENGTH, file) != NULL)
+    printf("\nProfile Settings for '%s':\n", *profileName);
+    while (fgets(line, MAXPROFILENAMELENGTH, file) != NULL)
     {
         printf("%s", line);
     }
@@ -111,24 +109,25 @@ void chooseProfile()
         if (file == NULL)
         {
             perror("Error opening file to edit settings");
-            return;
+            exit(0);
         }
 
         printf("Enter new settings to add:\n");
         getchar(); // Clears the leftover '\n'
-        fgets(line, MAX_LENGTH, stdin);
+        fgets(line, MAXPROFILENAMELENGTH, stdin);
         fprintf(file, "%s", line);
         fclose(file);
 
         printf("Settings updated successfully!\n");
     }
+    return;
 }
 
 // List all profiles
 void listProfiles()
 {
     FILE *file = fopen("profiles.txt", "r");
-    char profileName[MAX_LENGTH];
+    char profileName[MAXPROFILENAMELENGTH];
 
     if (file == NULL)
     {
@@ -137,7 +136,7 @@ void listProfiles()
     }
 
     printf("\nExisting Profiles:\n");
-    while (fgets(profileName, MAX_LENGTH, file) != NULL)
+    while (fgets(profileName, MAXPROFILENAMELENGTH, file) != NULL)
     {
         profileName[strcspn(profileName, "\n")] = '\0'; // removes the newline
         printf("- %s\n", profileName);
@@ -147,17 +146,17 @@ void listProfiles()
 }
 
 // Check if a profile exists
-int profileExists(const char *profileName)
+int profileExists(char *profileName)
 {
     FILE *file = fopen("profiles.txt", "r");
-    char existingProfile[MAX_LENGTH];
+    char existingProfile[MAXPROFILENAMELENGTH];
 
     if (file == NULL)
     {
         return 0; // No profiles exist
     }
 
-    while (fgets(existingProfile, MAX_LENGTH, file) != NULL)
+    while (fgets(existingProfile, MAXPROFILENAMELENGTH, file) != NULL)
     {
         existingProfile[strcspn(existingProfile, "\n")] = '\0';
         if (strcmp(existingProfile, profileName) == 0)
@@ -172,7 +171,7 @@ int profileExists(const char *profileName)
 }
 
 // Add profile name to "profiles.txt"
-void addProfileToFile(const char *profileName)
+void addProfileToFile(char *profileName)
 {
     FILE *file = fopen("profiles.txt", "a");
     if (file == NULL)

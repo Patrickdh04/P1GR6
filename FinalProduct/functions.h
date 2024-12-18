@@ -12,6 +12,7 @@
 #define MULTIPLEGENRESMAXLENGTH 500
 #define MULTIPLEACTORSMAXLENGTH 1000
 #define DURATIONMAXLENGTH 10
+#define MAXPROFILENAMELENGTH 100
 
 struct pref
 {
@@ -45,7 +46,6 @@ struct movieData
     int score;
 };
 
-int profileMain(const char *profileName);
 void setTimeSetting(int *timeSettingChosen);
 void startWarning(int choice, char nc, int newMovieTime, int conWatchTime);
 int inputMain(char *nc, struct pref *newMovie, struct conpref *conWatch);

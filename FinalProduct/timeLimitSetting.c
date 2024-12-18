@@ -1,13 +1,11 @@
+#include "functions.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#define MAX_LENGTH 100
-
 void setTimeSetting(int *timeSettingChosen)
 {
     const char *filename = "Warning.vbs";
-    const char *profileName;
 
     // Try to open the file in read mode
     FILE *file = fopen(filename, "r");
@@ -27,15 +25,6 @@ void setTimeSetting(int *timeSettingChosen)
         }
         fprintf(file, "x=msgbox(\"You have reached your watch-limit\",0, \"REMINDER!\")"); // the command going in the file
         fclose(file);
-    }
-
-// Create a new file for the profile settings
-    snprintf(filename, MAX_LENGTH, "%s.txt", profileName);
-    file = fopen(filename, "w");
-    if (file == NULL)
-    {
-        perror("Error creating profile file");
-        return;
     }
 
     printf("You can choose 3 different types of interventions for your binge-session.\n"

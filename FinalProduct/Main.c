@@ -12,9 +12,6 @@ int main(void){
     pref newMovie;
     conpref conWatch;
     movieData conWatchData;
-    const char *profileName;
-
-    profileMain(profileName);
 
     setTimeSetting(&timeSettingChosen);
 
@@ -31,9 +28,6 @@ int main(void){
     free(series);
 
     startWarning(timeSettingChosen, nc, newMovie.timetowatch, conWatch.timetowatch);
-
-
-
 
     return 0;
 }
