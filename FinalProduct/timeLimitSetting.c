@@ -59,17 +59,18 @@ void startWarning(int choice, char nc, int newMovieTime, int conWatchTime)
     switch (choice)
     {
     case 1:
+        #ifdef _WIN32
         system("Warning.vbs");
+        #endif
         break;
     case 2:
-        system("Warning.vbs");
         printf("\nClosing streaming service...\n");
         #ifdef _WIN32
+        system("Warning.vbs");
         system("C:\\WINDOWS\\System32\\taskkill /F /T /IM chrome.exe > nul 2>&1");
         system("C:\\WINDOWS\\System32\\taskkill /F /T /IM msedge.exe > nul 2>&1");
         #elif __APPLE__ 
         system("pkill Safari");
-        
         #endif
 
 

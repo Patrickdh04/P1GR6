@@ -13,7 +13,7 @@ int main(void){
     conpref conWatch;
     movieData conWatchData;
 
-    //profileMain();
+    profileMain();
 
     setTimeSetting(&timeSettingChosen);
 
