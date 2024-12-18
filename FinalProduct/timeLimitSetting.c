@@ -2,24 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void warnings(int choice, int time);
-
-int choice();
-
-int main()
+void setTimeSetting(int *timeSettingChosen)
 {
-    int result = choice();
-
-    int time = 10;
-    int choice = 2;
-    warnings(choice, time);
-
-    return EXIT_SUCCESS;
-}
-
-int choice()
-{
-    int choice;
     const char *filename = "Warning.vbs";
 
     // Try to open the file in read mode
@@ -36,7 +20,7 @@ int choice()
         if (!file)
         {
             perror("Error creating file");
-            return EXIT_FAILURE;
+            return;
         }
         fprintf(file, "x=msgbox(\"You have reached your watch-limit\",0, \"REMINDER!\")"); // the command going in the file
         fclose(file);
@@ -48,17 +32,30 @@ int choice()
            "Press 2 to close your streaming service window.\n"
            "Press 3 to shut down your computer 5 minutes after your time is up.\n");
 
-    while (choice < 1 || choice > 3)
+    while (*timeSettingChosen != 1 && *timeSettingChosen != 2 && *timeSettingChosen != 3)
     {
-        scanf("%d", &choice);
+        scanf(" %d", timeSettingChosen);
     }
-
-    return choice;
 }
 
-void warnings(int choice, int time)
+void startWarning(int choice, char nc, int newMovieTime, int conWatchTime)
 {
-   // sleep(time);
+    int timeToWait;
+    if (nc == 'n')
+    {
+        timeToWait = newMovieTime;
+    }
+    else if (nc == 'c')
+    {
+        timeToWait = conWatchTime;
+    }
+    else
+    {
+        printf("Error with time setting.\n");
+        return;
+    }
+
+    sleep(timeToWait);
     switch (choice)
     {
     case 1:
@@ -66,12 +63,19 @@ void warnings(int choice, int time)
         break;
     case 2:
         system("Warning.vbs");
-        printf("\ntrying to close Netflix and chrome\n");
-        system("C:\\WINDOWS\\System32\\taskkill /IM chrome.exe");
-        system("C:\\WINDOWS\\System32\\taskkill /IM netflix.exe");
+        printf("\nClosing streaming service...\n");
+        #ifdef _WIN32
+        system("C:\\WINDOWS\\System32\\taskkill /F /T /IM chrome.exe > nul 2>&1");
+        system("C:\\WINDOWS\\System32\\taskkill /F /T /IM msedge.exe > nul 2>&1");
+        #elif __APPLE__ 
+        system("pkill Safari");
+        
+        #endif
+
+
         break;
     case 3:
-        printf("\nClosing the computer in 5 minutes\n");
+        printf("\nTurning off your computer in 5 minutes\n");
         system("C:\\WINDOWS\\System32\\shutdown /s /t 300");
         break;
 

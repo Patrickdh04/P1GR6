@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 void warnings(int choice, int time);
+
 int main()
 {
     int time = 10;
@@ -13,7 +14,7 @@ int main()
 
 void warnings(int choice, int time)
 {
-    sleep(time);
+   // sleep(time);
     switch (choice)
     {
     case 1:

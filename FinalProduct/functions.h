@@ -45,6 +45,10 @@ struct movieData
     int score;
 };
 
+
+int profileMain();
+void setTimeSetting(int *timeSettingChosen);
+void startWarning(int choice, char nc, int newMovieTime, int conWatchTime);
 int inputMain(char *nc, struct pref *newMovie, struct conpref *conWatch);
 int movieSortMain(char nc, struct pref *newMovie, struct conpref *conWatch, struct movieData *movies, struct movieData *series, int *sizeOfMovies, int *sizeOfSeries, struct movieData *conWatchData);
 int moviePointsMain(struct movieData *movies, struct movieData *series, struct pref newMovie, int *sizeOfMovies, int *sizeOfSeries, char nc, struct movieData *conWatchData, struct conpref conWatch);

@@ -7,10 +7,16 @@ typedef struct conpref conpref;
 typedef struct movieData movieData;
 
 int main(void){
+    int timeSettingChosen = 0;
     char nc = '?';
     pref newMovie;
     conpref conWatch;
     movieData conWatchData;
+
+    //profileMain();
+
+    setTimeSetting(&timeSettingChosen);
+
     inputMain(&nc, &newMovie, &conWatch);
     
     movieData *movies = malloc(MOVIESTOTAL * sizeof(movieData));
@@ -20,9 +26,12 @@ int main(void){
     movieSortMain(nc, &newMovie, &conWatch, movies, series, &sizeOfMovies, &sizeOfSeries, &conWatchData);
 
     moviePointsMain(movies, series, newMovie, &sizeOfMovies, &sizeOfSeries, nc, &conWatchData, conWatch);
-
     free(movies);
     free(series);
+
+    startWarning(timeSettingChosen, nc, newMovie.timetowatch, conWatch.timetowatch);
+
+
 
 
     return 0;
