@@ -2,9 +2,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#define MAX_LENGTH 100
+
 void setTimeSetting(int *timeSettingChosen)
 {
     const char *filename = "Warning.vbs";
+    const char *profileName;
 
     // Try to open the file in read mode
     FILE *file = fopen(filename, "r");
@@ -26,6 +29,15 @@ void setTimeSetting(int *timeSettingChosen)
         fclose(file);
     }
 
+// Create a new file for the profile settings
+    snprintf(filename, MAX_LENGTH, "%s.txt", profileName);
+    file = fopen(filename, "w");
+    if (file == NULL)
+    {
+        perror("Error creating profile file");
+        return;
+    }
+
     printf("You can choose 3 different types of interventions for your binge-session.\n"
            "Choose what will happen when you have reached your watching limit:\n\n"
            "Press 1 to get a pop-up message.\n"
@@ -35,7 +47,13 @@ void setTimeSetting(int *timeSettingChosen)
     while (*timeSettingChosen != 1 && *timeSettingChosen != 2 && *timeSettingChosen != 3)
     {
         scanf(" %d", timeSettingChosen);
+
+        getchar(); // Clears the leftover '\n', but can also use %[^\n]
+        fgets(*timeSettingChosen, MAX_LENGTH, stdin);
+        fprintf(file, "%s", *timeSettingChosen);
+        fclose(file);
     }
+
 }
 
 void startWarning(int choice, char nc, int newMovieTime, int conWatchTime)

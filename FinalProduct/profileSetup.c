@@ -11,7 +11,7 @@ void listProfiles();
 int profileExists(const char *profileName);
 void addProfileToFile(const char *profileName);
 
-int profileMain()
+int profileMain(const char *profileName)
 {
     int choice;
 
@@ -47,7 +47,6 @@ int profileMain()
 void createProfile()
 {
     char profileName[MAX_LENGTH];
-    char settings[MAX_LENGTH];
     char filename[MAX_LENGTH];
     FILE *file;
 
@@ -60,22 +59,6 @@ void createProfile()
         printf("Profile '%s' already exists.\n", profileName);
         return;
     }
-
-    // Create a new file for the profile settings
-    snprintf(filename, MAX_LENGTH, "%s.txt", profileName);
-    file = fopen(filename, "w");
-    if (file == NULL)
-    {
-        perror("Error creating profile file");
-        return;
-    }
-
-    // Input initial settings
-    printf("Enter initial settings for the profile: ");
-    getchar(); // Clears the leftover '\n', but can also use %[^\n]
-    fgets(settings, MAX_LENGTH, stdin);
-    fprintf(file, "%s", settings);
-    fclose(file);
 
     // Add the profile name to the profiles list
     addProfileToFile(profileName);

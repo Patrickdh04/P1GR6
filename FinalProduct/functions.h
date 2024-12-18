@@ -45,7 +45,7 @@ struct movieData
     int score;
 };
 
-int profileMain();
+int profileMain(const char *profileName);
 void setTimeSetting(int *timeSettingChosen);
 void startWarning(int choice, char nc, int newMovieTime, int conWatchTime);
 int inputMain(char *nc, struct pref *newMovie, struct conpref *conWatch);
