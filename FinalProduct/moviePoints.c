@@ -28,10 +28,6 @@ int moviePointsMain(movieData *movies, movieData *series, pref newMovie, int *si
       {
         series[i].episodes = newMovie.timetowatch / series[i].duration;
       }
-      else
-      {
-        series[i].episodes + 0; // Handle cases where the series has no episodes
-      }
     }
     // give points to movies and series
     give_points_movies(movies, newMovie, moviesLength);
