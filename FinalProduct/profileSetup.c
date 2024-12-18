@@ -6,7 +6,7 @@
 
 // Prototypes
 void createProfile();
-void viewProfile();
+void chooseProfile();
 void listProfiles();
 int profileExists(const char *profileName);
 void addProfileToFile(const char *profileName);
@@ -19,7 +19,7 @@ int profileMain()
     {
         printf("\nWelcome to TouchGrass\n");
         printf("1. Create Profile\n");
-        printf("2. View Profile\n");
+        printf("2. Choose Profile\n");
         printf("3. List All Profiles\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -30,7 +30,7 @@ int profileMain()
             createProfile();
             break;
         case 2:
-            viewProfile();
+            chooseProfile();
             break;
         case 3:
             listProfiles();
@@ -83,15 +83,15 @@ void createProfile()
     printf("Profile '%s' created successfully!\n", profileName);
 }
 
-// View and edit a profile
-void viewProfile()
+// Choose and edit a profile
+void chooseProfile()
 {
     char profileName[MAX_LENGTH];
     char filename[MAX_LENGTH];
     char line[MAX_LENGTH];
     FILE *file;
 
-    printf("Enter the profile name to view: ");
+    printf("Enter the profile name you would like to use: ");
     scanf("%s", profileName);
 
     // Check if the profile exists

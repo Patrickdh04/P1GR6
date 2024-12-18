@@ -18,7 +18,7 @@ int almostmain() {
     do {
         printf("\nWelcome to TouchGrass\n");
         printf("1. Create Profile\n");
-        printf("2. View Profile\n");
+        printf("2. Choose Profile\n");
         printf("3. List All Profiles\n");
         printf("4. Exit\n");
         printf("Enter your choice: ");
