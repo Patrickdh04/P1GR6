@@ -178,42 +178,42 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
 {
   // display movie
   printf("These are the movie recommendations: \n\n");
-  printf("%-35s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "TEST-SCORE: "); // "TEST-SCORE" TEMPORARY
+  printf("%-35s%-16s%-16s\n", "Title:", "Duration:", "IMDB:" ); 
   printf("--------------------------------------------------------------------------");
   if (moviesLength < 5)
   {
     for (int i = 0; i < moviesLength; i++)
     {
-      printf("\n%-35.30s%-3d min         %-16.1lf%-16d",
+      printf("\n%-35.30s%-3d min         %-16.1lf",
              movies[i].title,
              movies[i].duration / 60,
-             movies[i].rating,
-             movies[i].score); // temporary
+             movies[i].rating
+             ); 
     }
   }
   else
   {
     for (int i = 0; i < 5; i++)
     {
-      printf("\n%-35.30s%-3d min         %-16.1lf%-16d",
+      printf("\n%-35.30s%-3d min         %-16.1lf",
              movies[i].title,
              movies[i].duration / 60,
-             movies[i].rating,
-             movies[i].score); // temporary
+             movies[i].rating
+             );
     }
   }
 
   // display serie
   printf("\n\nThese are the series recommendations: \n\n");
-  printf("%-35s%-16s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:", "Test-Score");
+  printf("%-35s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:");
   printf("--------------------------------------------------------------------------\n");
   if (seriesLength < 5)
   {
     for (int i = 0; i < seriesLength; i++)
     {
-      printf("%-35.30s%-3d min         %-16.1lf%-16d%-16d\n",
+      printf("%-35.30s%-3d min         %-16.1lf%-16d\n",
              series[i].title, series[i].duration / 60,
-             series[i].rating, series[i].episodes, series[i].score);
+             series[i].rating, series[i].episodes);
     }
   }
   else
