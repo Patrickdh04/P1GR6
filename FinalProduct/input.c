@@ -21,7 +21,8 @@ int inputMain(char *nc, pref *newMovie, conpref *conWatch)
     conpref conWatchMovie;
     char choice;
     do
-    { // New recommendation or continue with series?
+    { 
+        // New recommendation or continue with series?
         printf("Do you want a new recommendation or continue watching a series? (n for new / c for continue): \n");
          
         scanf(" %c", &choice);
@@ -62,7 +63,7 @@ pref new_rec(void)
 
     int min_rating = 0, max_rating = 0;
 
-    printf("\nWelcome to the Software 1 Group 6 Movie recommender!\n\n");
+  
 
     do
     { // Get 3 genres
