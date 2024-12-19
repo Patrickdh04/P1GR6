@@ -185,7 +185,7 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
 
   if (moviesLength - currentMovieIndex < 5)
   {
-    for (int i = 0; i < moviesLength; i++)
+    for (int i = 0 + currentMovieIndex; i < moviesLength -; i++)
     {
       printf("\n%-35.30s%-3d min         %-16.1lf",
              movies[i].title,
