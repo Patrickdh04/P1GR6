@@ -6,7 +6,8 @@ typedef struct pref pref;
 typedef struct conpref conpref;
 typedef struct movieData movieData;
 
-int main(void){
+int main(void)
+{
     int timeSettingChosen = 0;
     char nc = '?';
     pref newMovie;
@@ -17,7 +18,7 @@ int main(void){
     setTimeSetting(&timeSettingChosen);
 
     inputMain(&nc, &newMovie, &conWatch);
-    
+
     movieData *movies = malloc(MOVIESTOTAL * sizeof(movieData));
     movieData *series = malloc(MOVIESTOTAL * sizeof(movieData));
 

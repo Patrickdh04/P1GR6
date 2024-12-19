@@ -83,9 +83,7 @@ void saveMovieData(movieData *moviesPreSort)
             strcpy(moviesPreSort[i].ageRating, "n");
         }
 
-        
-
-        // If there is a valid duration we save the data, if not we discard the movie
+                // If there is a valid duration we save the data, if not we discard the movie
         if (stringduration[0] != '0')
         {
             sscanf(stringduration, "%i", &moviesPreSort[i].duration);

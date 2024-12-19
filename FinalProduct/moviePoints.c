@@ -176,33 +176,31 @@ int sort_series(const void *a, const void *b)
 }
 void display(movieData *movies, int moviesLength, movieData *series, int seriesLength, int currentMovieIndex)
 {
-    int listSize = 5;           // Number of items to show per page
+  int listSize = 5; // Number of items to show per page
 
   // display movie
   printf("These are the movie recommendations: \n\n");
-  printf("%-35s%-16s%-16s\n", "Title:", "Duration:", "IMDB:" ); 
+  printf("%-35s%-16s%-16s\n", "Title:", "Duration:", "IMDB:");
   printf("-----------------------------------------------------------------------------");
 
   if (moviesLength - currentMovieIndex < 5)
   {
-    for (int i = 0 + currentMovieIndex; i < moviesLength -; i++)
+    for (int i = 0; i < moviesLength; i++)
     {
       printf("\n%-35.30s%-3d min         %-16.1lf",
              movies[i].title,
              movies[i].duration / 60,
-             movies[i].rating
-             ); 
+             movies[i].rating);
     }
   }
   else
   {
-    for (int i = 0+currentMovieIndex; i < 5+currentMovieIndex; i++)
+    for (int i = 0 + currentMovieIndex; i < 5 + currentMovieIndex; i++)
     {
       printf("\n%-35.30s%-3d min         %-16.1lf",
              movies[i].title,
              movies[i].duration / 60,
-             movies[i].rating
-             );
+             movies[i].rating);
     }
   }
 
@@ -235,7 +233,7 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
 
   if (newRecChoice == 'y')
   {
-    display(movies, moviesLength, series, seriesLength, currentMovieIndex+listSize);
+    display(movies, moviesLength, series, seriesLength, currentMovieIndex + listSize);
   }
 }
 void displayContinue(movieData *conWatchData)

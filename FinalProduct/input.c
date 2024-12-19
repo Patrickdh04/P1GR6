@@ -21,12 +21,13 @@ int inputMain(char *nc, pref *newMovie, conpref *conWatch)
     conpref conWatchMovie;
     char choice;
     do
-    { 
+    {
         // New recommendation or continue with series?
         printf("Do you want a new recommendation or continue watching a series? (n for new / c for continue): \n");
-         
+
         scanf(" %c", &choice);
-        while (getchar() != '\n'); 
+        while (getchar() != '\n')
+            ;
     } while (choice != 'n' && choice != 'c'); // check if user typed n or c, repeat if not
 
     if (choice == 'n')
@@ -57,21 +58,20 @@ pref new_rec(void)
     char gp1[15] = "?", gp2[15] = "?", gp3[15] = "?"; // 3 genre preferences
     char actor1[50] = "?", actor2[50] = "?", actor3[50] = "?";
     char genre[AMOUNTOFGENRES][15] = {"Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family",
-                          "Fantasy", "History", "Horror", "Musical", "Mystery", "Reality-TV", "Romance", "Sci-Fi", "Short", "Sport", "Thriller", "War"};
+                                      "Fantasy", "History", "Horror", "Musical", "Mystery", "Reality-TV", "Romance", "Sci-Fi", "Short", "Sport", "Thriller", "War"};
 
     char ar;
 
     int min_rating = 0, max_rating = 0;
 
-  
-
     do
     { // Get 3 genres
         printf("\nWrite 1 genre you want to see (Write '?' for a list of genres): \n");
-        
+
         scanf(" %s", gp1);
 
-        for (int i = 0; i < AMOUNTOFGENRES; i++) {
+        for (int i = 0; i < AMOUNTOFGENRES; i++)
+        {
             if (strcmp(gp1, genre[i]) == 0)
             {
                 g1 = i;
@@ -86,14 +86,15 @@ pref new_rec(void)
     } while (g1 == -1); // repeat if no valid genre 1
 
     printf("\nWrite a second genre you want to see (Write '?' to skip): \n");
-    
+
     scanf(" %s", gp2);
 
     printf("\nWrite a third genre you want to see (Write '?' to skip): \n");
-    
+
     scanf(" %s", gp3);
 
-    for (int i = 0; i < AMOUNTOFGENRES; i++) {
+    for (int i = 0; i < AMOUNTOFGENRES; i++)
+    {
         if (strcmp(gp2, genre[i]) == 0)
         {
             g2 = i;
@@ -104,37 +105,37 @@ pref new_rec(void)
         } // Get the 21 genre indexes 0-20
     }
 
-
     printf("\nWrite 1 actor you want to see (Write '?' to skip): \n");
-    
+
     scanf(" %[^\n]%*c", actor1);
 
     printf("\nWrite a second actor you want to see (Write '?' to skip): \n");
-    
+
     scanf(" %[^\n]%*c", actor2);
 
     printf("\nWrite a third actor you want to see (Write '?' to skip): \n");
-    
+
     scanf(" %[^\n]%*c", actor3);
 
     do
     {
         printf("\nDo you want to be recommended 18+ films? (y/n): \n");
         scanf(" %c", &ar);
-        while (getchar() != '\n');
+        while (getchar() != '\n')
+            ;
     } while (ar != 'y' && ar != 'n'); // repeat if no valid answer
 
     do
     {
         printf("\nWrite the minimum IMDb rating you want to look for (whole number between 1 and 9): \n");
-        
+
         scanf(" %d", &min_rating);
     } while (min_rating < 0 || min_rating > 10); // repeat if not between 1 and 9
 
     do
     {
         printf("\nWrite the maximum IMDb rating you want to look for (whole number between 1 and 10): \n");
-        
+
         scanf(" %d", &max_rating);
     } while (max_rating <= min_rating || max_rating > 10); // repeat if not bigger than min_rating and less than 10
 
@@ -169,7 +170,7 @@ conpref con_rec(void)
     do
     { // Get series name
         printf("\nWrite the name of the series: \n");
-        scanf ("%[^\n]%*c", seriesName);
+        scanf("%[^\n]%*c", seriesName);
 
     } while (strcmp(seriesName, "?") == 0);
 
@@ -179,7 +180,7 @@ conpref con_rec(void)
     // create struct of data
     strcpy(con_series.seriesName, seriesName);
     con_series.timetowatch = diff;
-    return con_series;    
+    return con_series;
 }
 
 int getdiff(void)
