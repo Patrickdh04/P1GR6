@@ -40,11 +40,12 @@ void setTimeSetting(int *timeSettingChosen)
             perror("Fejl ved åbning af output-fil");
             return;
         }
-         fprintf(File, "Your time is up!!!!");
+         fprintf(File, "Your time is up!");
          
     #endif
 
-    printf("You can choose 3 different types of interventions for your binge-session.\n"
+    printf("Welcome to the Software 1 Group 6 Movie recommender!\n\n"
+           "You can choose 3 different types of interventions for your binge-session.\n"
            "Choose what will happen when you have reached your watching limit:\n\n"
            "Press 1 to get a pop-up message.\n"
            "Press 2 to close your streaming service window.\n"
@@ -52,6 +53,7 @@ void setTimeSetting(int *timeSettingChosen)
     while (*timeSettingChosen != 1 && *timeSettingChosen != 2 && *timeSettingChosen != 3)
     {
         scanf(" %d", timeSettingChosen);
+        printf ("\n");
     }
 }
 

@@ -97,8 +97,7 @@ void saveMovieData(movieData *moviesPreSort)
             strcpy(moviesPreSort[i].ageRating, "n");
         }
 
-        // We check if a movie is a series
-        moviesPreSort[i].isSeries = (year[5] == '-');
+        
 
         // If there is a valid duration we save the data, if not we discard the movie
         if (stringduration[0] != '0')
@@ -112,6 +111,11 @@ void saveMovieData(movieData *moviesPreSort)
             fscanf(pFile, " %*[^\n]");
             discard(&moviesPreSort[i]);
             continue;
+        }
+        // We check if a movie is a series
+        if (year[5] == '-' || moviesPreSort[i].duration < 3000)
+        {
+            moviesPreSort[i].isSeries = 1;
         }
         // Before we continue saving data we need to determine if there are multiple genres or not
         // If there are more than one, the genres will be listed within this "|" symbol

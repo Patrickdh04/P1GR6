@@ -179,7 +179,7 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
   // display movie
   printf("These are the movie recommendations: \n\n");
   printf("%-35s%-16s%-16s\n", "Title:", "Duration:", "IMDB:" ); 
-  printf("--------------------------------------------------------------------------");
+  printf("-----------------------------------------------------------------------------");
   if (moviesLength < 5)
   {
     for (int i = 0; i < moviesLength; i++)
@@ -206,7 +206,7 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
   // display serie
   printf("\n\nThese are the series recommendations: \n\n");
   printf("%-35s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:");
-  printf("--------------------------------------------------------------------------\n");
+  printf("-----------------------------------------------------------------------------\n");
   if (seriesLength < 5)
   {
     for (int i = 0; i < seriesLength; i++)
@@ -220,9 +220,9 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
   {
     for (int i = 0; i < 5; i++)
     {
-      printf("%-35.30s%-3d min         %-16.1lf%-16d%-16d\n",
+      printf("%-35.30s%-3d min         %-16.1lf%-16d\n",
              series[i].title, series[i].duration / 60,
-             series[i].rating, series[i].episodes, series[i].score);
+             series[i].rating, series[i].episodes);
     }
   }
 }
@@ -230,6 +230,6 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
 void displayContinue(movieData *conWatchData)
 {
   printf("%-35s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:");
-  printf("--------------------------------------------------------------------------\n");
+  printf("----------------------------------------------------------------------------------------------\n");
   printf("%-35.30s%-3d min         %-16.1lf%-16d\n", conWatchData->title, conWatchData->duration / 60, conWatchData->rating, conWatchData->episodes);
 }
