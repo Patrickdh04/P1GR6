@@ -1,2 +1,1 @@
-# P1GR6
-Dette er vores P1 projekt
+Welcome to the Movie Recommendation system made to reduce 

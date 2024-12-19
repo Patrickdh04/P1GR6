@@ -1,23 +1,23 @@
+/*
+For this script we needed information on how to utilize files and check for applications running on your computer.
+For this purpose, we used the sources below to find information on how to this.
+
+Used below source for how to open a specific file with a Batch-file
+https://stackoverflow.com/questions/2594447/opening-a-specific-file-with-a-batch-file
+Used below source for how to force close apps on Windows
+https://www.hexnode.com/mobile-device-management/help/script-to-force-close-apps-on-windows/#:~:text=Batch%20script,-Batch%20script%20to&text=The%20taskkill%20command%20terminates%20all,the%20app%20is%20case%20sensitive
+Used below source to check which operating system is running on computer
+https://www.geeksforgeeks.org/how-to-detect-operating-system-through-a-c-program/
+*/
+
 #include "functions.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-/*
-We used some of these links to make this code work
-
-Opening a specific file with a Batch-file
-
-https://stackoverflow.com/questions/2594447/opening-a-specific-file-with-a-batch-file 
-
-how to open web urls using C
-https://stackoverflow.com/questions/58467675/how-to-open-web-urls-using-c-language 
-
-Scrip to force close apps on Windows
-https://www.hexnode.com/mobile-device-management/help/script-to-force-close-apps-on-windows/#:~:text=Batch%20script,-Batch%20script%20to&text=The%20taskkill%20command%20terminates%20all,the%20app%20is%20case%20sensitive. */
 
 void setTimeSetting(int *timeSettingChosen)
 {
-   #ifdef _WIN32
+#ifdef _WIN32
     const char *filename = "Warning.vbs";
 
     // Try to open the file in read mode
@@ -39,19 +39,18 @@ void setTimeSetting(int *timeSettingChosen)
         fprintf(file, "x=msgbox(\"You have reached your watch-limit\",0, \"REMINDER!\")"); // the command going in the file
         fclose(file);
     }
-    #elif __APPLE__
-       FILE *File = fopen("warning.txt", "w");
-        if (File == NULL)
-        {
-            perror("Fejl ved åbning af output-fil");
-            return;
-        }
-         fprintf(File, "Your time is up!");
-         
-    #endif
+#elif __APPLE__
+    FILE *File = fopen("warning.txt", "w");
+    if (File == NULL)
+    {
+        perror("Fejl ved åbning af output-fil");
+        return;
+    }
+    fprintf(File, "Your time is up!");
 
-    printf("Welcome to the Software 1 Group 6 Movie recommender!\n\n"
-           "You can choose 3 different types of interventions for your binge-session.\n"
+#endif
+
+    printf("You can choose 3 different types of interventions for your binge-session.\n"
            "Choose what will happen when you have reached your watching limit:\n\n"
            "Press 1 to get a pop-up message.\n"
            "Press 2 to close your streaming service window.\n"
@@ -59,7 +58,7 @@ void setTimeSetting(int *timeSettingChosen)
     while (*timeSettingChosen != 1 && *timeSettingChosen != 2 && *timeSettingChosen != 3)
     {
         scanf(" %d", timeSettingChosen);
-        printf ("\n");
+        printf("\n");
     }
 }
 
@@ -85,7 +84,7 @@ void startWarning(int choice, char nc, int newMovieTime, int conWatchTime)
     {
     case 1:
 #ifdef _WIN32
-        
+
         system("Warning.vbs");
 #elif __APPLE__
         system("open warning.txt");

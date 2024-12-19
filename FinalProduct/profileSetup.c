@@ -16,7 +16,7 @@ void profileMain(char *profileName)
 
     do
     {
-        printf("\nWelcome to TouchGrass\n");
+        printf("\nWelcome to our movie recommendation system!\n");
         printf("1. Create Profile\n");
         printf("2. Choose Profile\n");
         printf("3. List All Profiles\n");

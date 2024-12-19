@@ -13,6 +13,7 @@ int main(void){
     conpref conWatch;
     movieData conWatchData;
 
+    printf("Welcome to the Software 1 Group 6 Movie Recommender!\n\n");
     setTimeSetting(&timeSettingChosen);
 
     inputMain(&nc, &newMovie, &conWatch);
