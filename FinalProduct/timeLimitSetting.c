@@ -3,10 +3,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 /*
+We used some of these links to make this code work
+
+Opening a specific file with a Batch-file
+
 https://stackoverflow.com/questions/2594447/opening-a-specific-file-with-a-batch-file 
 
+how to open web urls using C
 https://stackoverflow.com/questions/58467675/how-to-open-web-urls-using-c-language 
 
+Scrip to force close apps on Windows
 https://www.hexnode.com/mobile-device-management/help/script-to-force-close-apps-on-windows/#:~:text=Batch%20script,-Batch%20script%20to&text=The%20taskkill%20command%20terminates%20all,the%20app%20is%20case%20sensitive. */
 
 void setTimeSetting(int *timeSettingChosen)
