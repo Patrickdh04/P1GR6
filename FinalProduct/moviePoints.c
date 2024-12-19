@@ -12,7 +12,7 @@ void give_points_movies(movieData movies[], pref newMovie, int size);
 void give_points_series(movieData series[], pref newMovie, int size);
 int sort_movie(const void *a, const void *b);
 int sort_series(const void *a, const void *b);
-void display(movieData *movies, int moviesLength, movieData *series, int seriesLength);
+void display(movieData *movies, int moviesLength, movieData *series, int seriesLength, int currentMovieIndex);
 void displayContinue(movieData *conWatchData);
 
 int moviePointsMain(movieData *movies, movieData *series, pref newMovie, int *sizeOfMovies, int *sizeOfSeries, char nc, movieData *conWatchData, conpref conWatch)
@@ -35,7 +35,7 @@ int moviePointsMain(movieData *movies, movieData *series, pref newMovie, int *si
     // sort points for movies and series
     qsort(movies, moviesLength, sizeof(movieData), sort_movie);
     qsort(series, seriesLength, sizeof(movieData), sort_series);
-    display(movies, moviesLength, series, seriesLength);
+    display(movies, moviesLength, series, seriesLength, 0);
   }
   else if (nc == 'c')
   {
@@ -78,7 +78,7 @@ void give_points_movies(movieData movies[], pref newMovie, int size)
       {
         if (!actorMatched[j] && strcmp(movies[i].actor[l], newMovie.actors[j]) == 0)
         {
-          movies[i].score++;
+          movies[i].score += 3;
           actorMatched[j] = 1;
           break;
         }
@@ -174,13 +174,16 @@ int sort_series(const void *a, const void *b)
   }
   return 0; // Equal score and rating
 }
-void display(movieData *movies, int moviesLength, movieData *series, int seriesLength)
+void display(movieData *movies, int moviesLength, movieData *series, int seriesLength, int currentMovieIndex)
 {
+    int listSize = 5;           // Number of items to show per page
+
   // display movie
   printf("These are the movie recommendations: \n\n");
   printf("%-35s%-16s%-16s\n", "Title:", "Duration:", "IMDB:" ); 
   printf("-----------------------------------------------------------------------------");
-  if (moviesLength < 5)
+
+  if (moviesLength - currentMovieIndex < 5)
   {
     for (int i = 0; i < moviesLength; i++)
     {
@@ -193,7 +196,7 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
   }
   else
   {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0+currentMovieIndex; i < 5+currentMovieIndex; i++)
     {
       printf("\n%-35.30s%-3d min         %-16.1lf",
              movies[i].title,
@@ -207,7 +210,7 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
   printf("\n\nThese are the series recommendations: \n\n");
   printf("%-35s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:");
   printf("-----------------------------------------------------------------------------\n");
-  if (seriesLength < 5)
+  if (seriesLength - currentMovieIndex < 5)
   {
     for (int i = 0; i < seriesLength; i++)
     {
@@ -218,15 +221,23 @@ void display(movieData *movies, int moviesLength, movieData *series, int seriesL
   }
   else
   {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0 + currentMovieIndex; i < 5 + currentMovieIndex; i++)
     {
       printf("%-35.30s%-3d min         %-16.1lf%-16d\n",
              series[i].title, series[i].duration / 60,
              series[i].rating, series[i].episodes);
     }
   }
-}
 
+  char newRecChoice;
+  printf("\nDo you want 5 new recommendations?\nType 'y' for yes, and anything else if you have something to watch.\n");
+  scanf(" %c", &newRecChoice);
+
+  if (newRecChoice == 'y')
+  {
+    display(movies, moviesLength, series, seriesLength, currentMovieIndex+listSize);
+  }
+}
 void displayContinue(movieData *conWatchData)
 {
   printf("%-35s%-16s%-16s%-16s\n", "Title:", "Duration:", "IMDB:", "Episodes:");
