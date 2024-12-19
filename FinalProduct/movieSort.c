@@ -3,20 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define NAMEMAXLENGTH 100
-#define GENREMAXLENGTH 12
-#define AGERATINGMAXLENGTH 10
-#define MAXDURATION 4
-#define MAXAMOUNTOFGENRES 3
-#define MAXAMOUNTOFACTORS 4
-#define ACTORSMAXLENGTH 50
-#define MOVIESTOTAL 9957
-#define TIMEMAXLENGTH 4
-#define YEARMAXLENGTH 13
-#define MULTIPLEGENRESMAXLENGTH 500
-#define MULTIPLEACTORSMAXLENGTH 1000
-#define DURATIONMAXLENGTH 10
-
 typedef struct movieData movieData;
 typedef struct pref pref;
 typedef struct conpref conpref;
