@@ -46,7 +46,7 @@ void setTimeSetting(int *timeSettingChosen)
         perror("Fejl ved åbning af output-fil");
         return;
     }
-    fprintf(File, "Your time is up!");
+    fprintf(File, "You have reached your watch-limit");
 
 #endif
 

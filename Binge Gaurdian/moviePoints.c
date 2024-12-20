@@ -127,7 +127,7 @@ void give_points_series(movieData series[], pref newMovie, int size)
       {
         if (strcmp(series[i].actor[l], newMovie.actors[j]) == 0)
         {
-          series[i].score++;
+          series[i].score += 3;
           actorMatched[j] = 1;
         }
       }
