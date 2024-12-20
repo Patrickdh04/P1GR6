@@ -88,11 +88,11 @@ void give_points_movies(movieData movies[], pref newMovie, int size)
     int timeDiff = newMovie.timetowatch * 60 - movies[i].duration;
     if (timeDiff <= 300)
     {
-      movies[i].score += 3;
+      movies[i].score += 5;
     }
     else if (timeDiff <= 600)
     {
-      movies[i].score += 2;
+      movies[i].score += 3;
     }
     else if (timeDiff <= 900)
     {
